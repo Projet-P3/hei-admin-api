@@ -441,14 +441,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Claim'
+              type: array
+              items:
+                $ref: '#/components/schemas/Claim'
       responses:
         '200':
           description: The created claim
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Claim'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Claim'
         '400':
           $ref: '#/components/responses/400'
         '403':
