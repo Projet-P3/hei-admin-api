@@ -18,7 +18,6 @@ import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import school.hei.haapi.integration.conf.AbstractContextInitializer;
 import school.hei.haapi.integration.conf.TestUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -29,24 +28,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
-import static school.hei.haapi.integration.conf.TestUtils.STUDENT1_ID;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static school.hei.haapi.integration.conf.TestUtils.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = TranscriptIT.ContextInitializer.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 @Testcontainers
+@ContextConfiguration(initializers = FeeIT.ContextInitializer.class)
 @AutoConfigureMockMvc
 public class TranscriptIT {
     @MockBean
-    private SentryConf sentryConfMock;
+    private SentryConf sentryConf;
     @MockBean
     private CognitoComponent cognitoComponentMock;
 
-    private ApiClient anApiClient(String token) {
-        return TestUtils.anApiClient(token, ContextInitializer.SERVER_PORT);
+    private static ApiClient anApiClient(String token) {
+        return TestUtils.anApiClient(token, CourseIT.ContextInitializer.SERVER_PORT);
     }
 
     @BeforeEach
@@ -96,7 +93,6 @@ public class TranscriptIT {
 
         assertNotNull(responseBody.getCreatedByUserRole());
         assertNotNull(responseBody.getRef());
-        assertNotNull(responseBody.getTranscriptId().length());
         assertTrue(responseBody.getTranscriptId().equals("transcript1_id"));
     }
 
