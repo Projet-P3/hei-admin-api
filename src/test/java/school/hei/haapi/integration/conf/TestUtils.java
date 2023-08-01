@@ -312,6 +312,16 @@ public class TestUtils {
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
   }
 
+  public static StudentTranscriptVersion version1() {
+    return new StudentTranscriptVersion()
+            .id("id_version_1")
+            .transcriptId("transcript1_id")
+            .ref(1)
+            .createdByUserId(MANAGER_ID)
+            .createdByUserRole("Manager")
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
+  }
+
   public static boolean isBefore(String a, String b) {
     return a.compareTo(b) < 0;
   }
