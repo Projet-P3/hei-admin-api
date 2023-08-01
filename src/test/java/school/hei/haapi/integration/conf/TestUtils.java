@@ -12,7 +12,6 @@ import org.junit.jupiter.api.function.Executable;
 import school.hei.haapi.endpoint.rest.client.ApiClient;
 import school.hei.haapi.endpoint.rest.client.ApiException;
 import school.hei.haapi.endpoint.rest.model.*;
-import school.hei.haapi.endpoint.rest.model.*;
 import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
@@ -57,12 +56,6 @@ public class TestUtils {
   public static final String TRANSCRIPT1_ID = "transcript1_id";
   public static final String TRANSCRIPT2_ID = "transcript2_id";
   public static final String TRANSCRIPT3_ID = "transcript3_id";
-  public static final String VERSION1_ID = "version1_id";
-  public static final String VERSION2_ID = "version2_id";
-  public static final String VERSION3_ID = "version_id";
-  public static final String CLAIM1_ID = "claim1_id";
-  public static final String CLAIM2_ID = "claim2_id";
-  public static final String CLAIM3_ID = "claim3_id";
   public static final String VERSION1_ID = "version1_id";
   public static final String VERSION2_ID = "version2_id";
   public static final String VERSION3_ID = "version_id";
@@ -427,6 +420,7 @@ public class TestUtils {
             .isDefinitive(true)
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
   }
+
 
   public static StudentTranscriptVersion version1() {
     return new StudentTranscriptVersion()
