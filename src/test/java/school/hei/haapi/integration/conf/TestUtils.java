@@ -1,6 +1,7 @@
 package school.hei.haapi.integration.conf;
 
 import java.io.IOException;
+import java.lang.Exception;
 import java.net.ServerSocket;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -10,13 +11,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.function.Executable;
 import school.hei.haapi.endpoint.rest.client.ApiClient;
 import school.hei.haapi.endpoint.rest.client.ApiException;
-import school.hei.haapi.endpoint.rest.model.Course;
-import school.hei.haapi.endpoint.rest.model.CreateFee;
-import school.hei.haapi.endpoint.rest.model.CrupdateCourse;
-import school.hei.haapi.endpoint.rest.model.EnableStatus;
-import school.hei.haapi.endpoint.rest.model.Fee;
-import school.hei.haapi.endpoint.rest.model.Teacher;
-import school.hei.haapi.endpoint.rest.model.UpdateStudentCourse;
+import school.hei.haapi.endpoint.rest.model.*;
 import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
@@ -305,6 +300,16 @@ public class TestUtils {
         .totalAmount(5000)
         .comment("Comment")
         .dueDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
+  }
+
+  public static Transcript transcript1() {
+    return new Transcript()
+            .id("transcript1_id")
+            .studentId(STUDENT1_ID)
+            .academicYear(2023)
+            .semester(Transcript.SemesterEnum.S3)
+            .isDefinitive(true)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
   }
 
   public static boolean isBefore(String a, String b) {
