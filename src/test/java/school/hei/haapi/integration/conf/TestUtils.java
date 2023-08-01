@@ -428,11 +428,11 @@ public class TestUtils {
   public static Transcript transcript1() {
     return new Transcript()
             .id("transcript1_id")
-            .studentId("student1_id")
-            .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
-            .academicYear(2021)
-            .semester(Transcript.SemesterEnum.S1)
-            .isDefinitive(true);
+            .studentId(STUDENT1_ID)
+            .academicYear(2023)
+            .semester(Transcript.SemesterEnum.S3)
+            .isDefinitive(true)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
   }
 
   public static StudentTranscriptClaim studentTranscriptClaim1(){
