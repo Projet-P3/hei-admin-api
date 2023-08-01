@@ -11,14 +11,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.function.Executable;
 import school.hei.haapi.endpoint.rest.client.ApiClient;
 import school.hei.haapi.endpoint.rest.client.ApiException;
-import school.hei.haapi.endpoint.rest.model.Course;
-import school.hei.haapi.endpoint.rest.model.CreateFee;
-import school.hei.haapi.endpoint.rest.model.CrupdateCourse;
-import school.hei.haapi.endpoint.rest.model.EnableStatus;
-import school.hei.haapi.endpoint.rest.model.Fee;
-import school.hei.haapi.endpoint.rest.model.Teacher;
-import school.hei.haapi.endpoint.rest.model.Transcript;
-import school.hei.haapi.endpoint.rest.model.UpdateStudentCourse;
+import school.hei.haapi.endpoint.rest.model.*;
 import school.hei.haapi.endpoint.rest.model.*;
 import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
@@ -432,6 +425,16 @@ public class TestUtils {
             .academicYear(2023)
             .semester(Transcript.SemesterEnum.S3)
             .isDefinitive(true)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
+  }
+
+  public static TranscriptVersion version1() {
+    return new TranscriptVersion()
+            .id("id_version_1")
+            .transcriptId("transcript1_id")
+            .ref(1)
+            .createdByUserId(MANAGER_ID)
+            .createdByUserRole("Manager")
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
   }
 
