@@ -334,9 +334,9 @@ paths:
       tags:
         - Transcript
       summary: Create new transcript or update existing transcript
-      operationId: crudStudentTranscripts
+      operationId: crupdateStudentTranscripts
       requestBody:
-        description: Groups to update
+        description: Transcript to update
         required: true
         content:
           application/json:
