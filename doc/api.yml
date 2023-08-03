@@ -437,7 +437,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StudentTranscriptVersion'
+                  $ref: '#/components/schemas/TranscriptVersion'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -476,7 +476,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StudentTranscriptVersion'
+                $ref: '#/components/schemas/TranscriptVersion'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -559,7 +559,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StudentTranscriptVersion'
+                $ref: '#/components/schemas/TranscriptVersion'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -608,7 +608,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StudentTranscriptClaim'
+                  $ref: '#/components/schemas/TranscriptClaim'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -652,7 +652,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StudentTranscriptClaim'
+                $ref: '#/components/schemas/TranscriptClaim'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -694,14 +694,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StudentTranscriptClaim'
+              $ref: '#/components/schemas/TranscriptClaim'
       responses:
         '200':
           description: List of transcript claim submit.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StudentTranscriptClaim'
+                $ref: '#/components/schemas/TranscriptClaim'
         '400':
           $ref: '#/components/responses/400'
         '403':
