@@ -383,7 +383,57 @@ public class TestUtils {
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
   }
 
-  public static StudentTranscriptClaim studentTranscriptClaim(){
+  public static StudentTranscriptVersion studentTranscriptVersion1(){
+    return new StudentTranscriptVersion()
+            .id(TRANSCRIPT_VERSION1_ID)
+            .transcriptId(transcript1().getId())
+            .ref(2)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .createdByUserId(student1().getId())
+            .createdByUserRole(String.valueOf(school.hei.haapi.model.User.Role.STUDENT));
+  }
+  public static StudentTranscriptVersion studentTranscriptVersion2(){
+    return new StudentTranscriptVersion()
+            .id(TRANSCRIPT_VERSION2_ID)
+            .transcriptId(transcript2().getId())
+            .ref(2)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .createdByUserId(student2().getId())
+            .createdByUserRole(String.valueOf(school.hei.haapi.model.User.Role.STUDENT));
+  }
+  public static StudentTranscriptVersion studentTranscriptVersion3(){
+    return new StudentTranscriptVersion()
+            .id(TRANSCRIPT_VERSION3_ID)
+            .transcriptId(transcript3().getId())
+            .ref(2)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .createdByUserId(student2().getId())
+            .createdByUserRole(String.valueOf(school.hei.haapi.model.User.Role.STUDENT));
+  }
+
+  public static StudentTranscriptClaim studentTranscriptClaim2(){
+    return new StudentTranscriptClaim()
+            .id(CLAIM2_ID)
+            .transcriptId(transcript2().getId())
+            .transcriptVersionId(studentTranscriptVersion2().getId())
+            .status(StudentTranscriptClaim.StatusEnum.OPEN)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .reason("web2 should be 20");
+  }
+  public static StudentTranscriptClaim studentTranscriptClaim3(){
+    return new StudentTranscriptClaim()
+            .id(CLAIM3_ID)
+            .transcriptId(transcript3().getId())
+            .transcriptVersionId(studentTranscriptVersion1().getId())
+            .status(StudentTranscriptClaim.StatusEnum.OPEN)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .reason("web2 should be 20");
+  }
+
+
+  public static StudentTranscriptClaim studentTranscriptClaim1(){
     return new StudentTranscriptClaim()
             .id("studentTranscriptClaim1_id")
             .transcriptId("transcript1_id")
