@@ -424,26 +424,6 @@ public class TestUtils {
             .createdByUserRole(String.valueOf(school.hei.haapi.model.User.Role.STUDENT));
   }
 
-  public static StudentTranscriptClaim studentTranscriptClaim2(){
-    return new StudentTranscriptClaim()
-            .id(CLAIM2_ID)
-            .transcriptId(transcript2().getId())
-            .transcriptVersionId(studentTranscriptVersion2().getId())
-            .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
-            .reason("web2 should be 20");
-  }
-  public static StudentTranscriptClaim studentTranscriptClaim3(){
-    return new StudentTranscriptClaim()
-            .id(CLAIM3_ID)
-            .transcriptId(transcript3().getId())
-            .transcriptVersionId(studentTranscriptVersion1().getId())
-            .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
-            .reason("web2 should be 20");
-  }
 
   public static Transcript transcript1() {
     return new Transcript()
@@ -460,6 +440,26 @@ public class TestUtils {
             .id(STUDENT_TRANSCRIPT_VERSION_CLAIM1_ID)
             .transcriptId(TRANSCRIPT1_ID)
             .transcriptVersionId(VERSION1_ID)
+            .status(StudentTranscriptClaim.StatusEnum.OPEN)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .reason("web2 should be 20");
+  }
+  public static StudentTranscriptClaim studentTranscriptClaim2(){
+    return new StudentTranscriptClaim()
+            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM2_ID)
+            .transcriptId(TRANSCRIPT2_ID)
+            .transcriptVersionId(VERSION2_ID)
+            .status(StudentTranscriptClaim.StatusEnum.OPEN)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .reason("web2 should be 20");
+  }
+  public static StudentTranscriptClaim studentTranscriptClaim3(){
+    return new StudentTranscriptClaim()
+            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM3_ID)
+            .transcriptId(TRANSCRIPT3_ID)
+            .transcriptVersionId(VERSION3_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
             .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
