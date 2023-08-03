@@ -35,6 +35,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
   private static final String TRANSCRIPT_CLAIM = "/students/*/transcripts/*/versions/*/claims";
 
+  private static final String TRANSCRIPT_VERSION_CLAIM = "/students/*/transcripts/*/versions/*/claims/*";
   private final AuthProvider authProvider;
   private final HandlerExceptionResolver exceptionResolver;
 
@@ -118,6 +119,13 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         .requestMatchers(new SelfMatcher(GET, "/students/*/transcripts")).hasAnyRole(STUDENT.getRole())
         .antMatchers(GET, "/students/*/transcripts").hasAnyRole(TEACHER.getRole())
         .antMatchers(POST, TRANSCRIPT_VERSION).hasAnyRole(MANAGER.getRole())
+        .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_VERSION_CLAIM)).hasAnyRole(STUDENT.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(STUDENT.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
+        .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(STUDENT.getRole())
+        .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
+        .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
             .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_CLAIM)).hasAnyRole(STUDENT.getRole())
             .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(TEACHER.getRole())
             .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(MANAGER.getRole())
