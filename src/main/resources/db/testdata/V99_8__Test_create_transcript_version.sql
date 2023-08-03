@@ -1,5 +1,6 @@
-INSERT INTO transcript_version (id, transcript_id, ref, created_by_user_id, created_by_user_role)
-VALUES ('version1_id', 'transcript1_id', 1, 'teacher1_id', 'TEACHER');
-
-INSERT INTO transcript_version (id, transcript_id, ref, created_by_user_id, created_by_user_role)
-VALUES ('version2_id', 'transcript2_id', 1, 'teacher1_id', 'TEACHER');
+insert into "transcript_version"
+(id,transcript_id, ref, create_by_user_id, create_by_user_role, creation_datetime)
+values
+    ('transcript_version1_id','transcript1_id', 2, 'student1_id' , 'STUDENT', '2021-12-08T08:25:24.00Z'),
+    ('transcript_version2_id','transcript2_id', 2, 'student2_id' , 'STUDENT', '2021-12-08T08:25:24.00Z'),
+    ('transcript_version3_id','transcript3_id', 2, 'student2_id' , 'STUDENT', '2021-12-08T08:25:24.00Z');
