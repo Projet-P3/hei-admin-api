@@ -11,8 +11,8 @@ import school.hei.haapi.SentryConf;
 import school.hei.haapi.endpoint.rest.api.TranscriptApi;
 import school.hei.haapi.endpoint.rest.client.ApiClient;
 import school.hei.haapi.endpoint.rest.client.ApiException;
-import school.hei.haapi.endpoint.rest.model.StudentTranscriptVersion;
 import school.hei.haapi.endpoint.rest.model.Transcript;
+import school.hei.haapi.endpoint.rest.model.TranscriptVersion;
 import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import school.hei.haapi.integration.conf.TestUtils;
 
@@ -87,7 +87,7 @@ public class TranscriptIT {
     ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
     TranscriptApi api = new TranscriptApi(student1Client);
 
-    StudentTranscriptVersion actual = api.getStudentTranscriptVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
+    TranscriptVersion actual = api.getStudentTranscriptVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
     assertEquals(version1(), actual);
   }
 
@@ -96,7 +96,7 @@ public class TranscriptIT {
     ApiClient teacher1Client = anApiClient(TEACHER1_TOKEN);
     TranscriptApi api = new TranscriptApi(teacher1Client);
 
-    StudentTranscriptVersion actual = api.getStudentTranscriptVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
+    TranscriptVersion actual = api.getStudentTranscriptVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
     assertEquals(version1(), actual);
   }
 
@@ -105,7 +105,7 @@ public class TranscriptIT {
     ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
     TranscriptApi api = new TranscriptApi(manager1Client);
 
-    StudentTranscriptVersion actual = api.getStudentTranscriptVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
+    TranscriptVersion actual = api.getStudentTranscriptVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
     assertEquals(version1(), actual);
   }
 

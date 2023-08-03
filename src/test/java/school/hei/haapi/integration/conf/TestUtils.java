@@ -312,8 +312,8 @@ public class TestUtils {
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
   }
 
-  public static StudentTranscriptVersion version1() {
-    return new StudentTranscriptVersion()
+  public static TranscriptVersion version1() {
+    return new TranscriptVersion()
             .id("id_version_1")
             .transcriptId("transcript1_id")
             .ref(1)
