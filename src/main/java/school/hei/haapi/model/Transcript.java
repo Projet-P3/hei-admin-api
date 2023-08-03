@@ -46,8 +46,7 @@ public class Transcript implements Serializable {
   @Enumerated(EnumType.STRING)
   private school.hei.haapi.endpoint.rest.model.Transcript.SemesterEnum semester;
 
-  private int academicYear;
-
+  private Integer academicYear;
   private boolean isDefinitive;
 
   @CreationTimestamp
