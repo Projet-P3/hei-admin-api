@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import school.hei.haapi.endpoint.rest.model.Transcript;
 import school.hei.haapi.model.User;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+import school.hei.haapi.endpoint.rest.model.Transcript;
 import school.hei.haapi.service.UserService;
 
 @Component
