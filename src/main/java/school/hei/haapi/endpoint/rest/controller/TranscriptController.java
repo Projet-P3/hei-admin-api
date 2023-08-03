@@ -23,6 +23,15 @@ public class TranscriptController {
     private final TranscriptService service;
     private final TranscriptMapper mapper;
 
+    @GetMapping("/students/{student_id}/transcripts/{transcript_id}")
+    public Transcript getStudentTranscriptById(
+            @PathVariable String student_id,
+            @PathVariable String transcript_id)
+    {
+        return mapper.toRest(
+                service.getStudentTranscriptById(student_id, transcript_id)
+        );
+    }
 
     @GetMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/raw")
     public ResponseEntity<byte[]> downloadTranscriptRaw(
