@@ -37,13 +37,13 @@ public class Transcript {
   @NotBlank(message = "id is mandatory")
   private String id;
   @NotBlank(message = "studentId is mandatory")
-  private String studentId;
+  private User studentId;
   @Type(type = "pgsql_enum")
   @Enumerated(EnumType.STRING)
   @NotBlank(message = "semester is mandatory")
   private SemesterEnum semester;
   @NotBlank(message = "academicYear is mandatory")
-  private int academicYear;
+  private Integer academicYear;
   @NotBlank(message = "isDefinitive is mandatory")
   private boolean isDefinitive;
   @CreationTimestamp
