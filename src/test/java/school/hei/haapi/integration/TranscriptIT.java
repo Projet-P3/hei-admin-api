@@ -28,7 +28,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static school.hei.haapi.integration.conf.TestUtils.*;
 
@@ -37,14 +39,14 @@ import static school.hei.haapi.integration.conf.TestUtils.*;
 @ContextConfiguration(initializers = FeeIT.ContextInitializer.class)
 @AutoConfigureMockMvc
 public class TranscriptIT {
-    @MockBean
-    private SentryConf sentryConf;
-    @MockBean
-    private CognitoComponent cognitoComponentMock;
+  @MockBean
+  private SentryConf sentryConf;
+  @MockBean
+  private CognitoComponent cognitoComponentMock;
 
-    private static ApiClient anApiClient(String token) {
-        return TestUtils.anApiClient(token, CourseIT.ContextInitializer.SERVER_PORT);
-    }
+  private static ApiClient anApiClient(String token) {
+    return TestUtils.anApiClient(token, CourseIT.ContextInitializer.SERVER_PORT);
+  }
 
     @BeforeEach
     void setUp() {
@@ -143,65 +145,57 @@ public class TranscriptIT {
         assertEquals(transcript1(),actual);
     }
 
-    @Test
-    void teacher_read_transcript_student_by_id_ok() throws ApiException {
-        ApiClient teacher1Client = anApiClient(TEACHER1_TOKEN);
-        TranscriptApi api = new TranscriptApi(teacher1Client);
 
-        Transcript actual = api.getStudentTranscriptById(STUDENT1_ID, transcript1().getId());
-        assertEquals(transcript1(),actual);
-    }
+  @Test
+  void manager_read_transcript_student_by_id_ok() throws ApiException {
+    ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
+    TranscriptApi api = new TranscriptApi(manager1Client);
 
-    @Test
-    void manager_read_transcript_student_by_id_ok() throws ApiException {
-        ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
-        TranscriptApi api = new TranscriptApi(manager1Client);
+    Transcript actual = api.getStudentTranscriptById(STUDENT1_ID, transcript1().getId());
+    assertEquals(transcript1(), actual);
+  }
 
-        Transcript actual = api.getStudentTranscriptById(STUDENT1_ID, transcript1().getId());
-        assertEquals(transcript1(),actual);
-    }
+  @Test
+  void read_transcript_student_by_id_ko() throws ApiException {
+    ApiClient badClient = anApiClient(BAD_TOKEN);
+    TranscriptApi api = new TranscriptApi(badClient);
 
-    @Test
-    void read_transcript_student_by_id_ko() throws ApiException {
-        ApiClient badClient = anApiClient(BAD_TOKEN);
-        TranscriptApi api = new TranscriptApi(badClient);
+    assertThrowsForbiddenException(() -> api.getStudentTranscriptById(STUDENT1_ID, transcript1().getId()));
+  }
 
-        assertThrowsForbiddenException(() -> api.getStudentTranscriptById(STUDENT1_ID, transcript1().getId()));
-    }
+  @Test
+  void student_read_specific_version_by_transcript_ok() throws ApiException {
+    ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
+    TranscriptApi api = new TranscriptApi(student1Client);
 
-    @Test
-    void student_read_specific_version_by_transcript_ok() throws ApiException {
-        ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
-        TranscriptApi api = new TranscriptApi(student1Client);
+    StudentTranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
+    assertEquals(version1(), actual);
+  }
 
-        StudentTranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
-        assertEquals(version1(), actual);
-    }
+  @Test
+  void teacher_read_specific_version_by_transcript_ok() throws ApiException {
+    ApiClient teacher1Client = anApiClient(TEACHER1_TOKEN);
+    TranscriptApi api = new TranscriptApi(teacher1Client);
 
-    @Test
-    void teacher_read_specific_version_by_transcript_ok() throws ApiException {
-        ApiClient teacher1Client = anApiClient(TEACHER1_TOKEN);
-        TranscriptApi api = new TranscriptApi(teacher1Client);
+    StudentTranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
+    assertEquals(version1(), actual);
+  }
 
-        StudentTranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
-        assertEquals(version1(), actual);
-    }
+  @Test
+  void manager_read_specific_version_by_transcript_ok() throws ApiException {
+    ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
+    TranscriptApi api = new TranscriptApi(manager1Client);
 
-    @Test
-    void manager_read_specific_version_by_transcript_ok() throws ApiException {
-        ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
-        TranscriptApi api = new TranscriptApi(manager1Client);
+    StudentTranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
+    assertEquals(version1(), actual);
+  }
 
-        StudentTranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
-        assertEquals(version1(), actual);
-    }
+  @Test
+  void read_specific_version_by_transcript_ko() throws ApiException {
+    ApiClient badClient = anApiClient(BAD_TOKEN);
+    TranscriptApi api = new TranscriptApi(badClient);
 
-    @Test
-    void read_specific_version_by_transcript_ko() throws ApiException {
-        ApiClient badClient = anApiClient(BAD_TOKEN);
-        TranscriptApi api = new TranscriptApi(badClient);
-
-        assertThrowsForbiddenException(() -> api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId()));
-    }
+    assertThrowsForbiddenException(() -> api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId()));
+  }
 
 }
