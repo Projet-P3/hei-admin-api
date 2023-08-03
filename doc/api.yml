@@ -496,7 +496,7 @@ paths:
       tags:
         - Transcript
       summary: Submit transcript pdf file to latest transcript version
-      operationId: putStudentTranscriptVersionPdf
+      operationId: updateTranscriptPdfVersion
       parameters:
         - name: student_id
           in: path
