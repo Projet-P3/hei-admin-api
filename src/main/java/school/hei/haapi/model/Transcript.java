@@ -6,6 +6,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -37,6 +39,8 @@ public class Transcript {
   @NotBlank(message = "id is mandatory")
   private String id;
   @NotBlank(message = "studentId is mandatory")
+  @ManyToOne()
+  @JoinColumn(name = "student_id", referencedColumnName = "id")
   private User studentId;
   @Type(type = "pgsql_enum")
   @Enumerated(EnumType.STRING)
