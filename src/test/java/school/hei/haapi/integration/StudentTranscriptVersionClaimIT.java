@@ -38,7 +38,7 @@ public class StudentTranscriptVersionClaimIT {
     }
 
     @Test
-    void student_read_student_transcript_version_claim() throws ApiException {
+    void student_read_student_transcript_version_claim_ok() throws ApiException {
         ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
         TranscriptApi api = new TranscriptApi(student1Client);
         StudentTranscriptClaim claim = api.getStudentClaimOfTranscriptVersion(
@@ -51,8 +51,42 @@ public class StudentTranscriptVersionClaimIT {
                 "transcript1_id",
                 "version1_id", 1, 10);
 
-        assertEquals(studentTranscriptClaim(), claim);
-        assertTrue(actual.contains(studentTranscriptClaim()));
+        assertEquals(studentTranscriptClaim1(), claim);
+        assertTrue(actual.contains(studentTranscriptClaim1()));
+    }
+    @Test
+    void teacher_read_student_transcript_version_claim_ok() throws ApiException {
+        ApiClient teacher1Client = anApiClient(TEACHER1_TOKEN);
+        TranscriptApi api = new TranscriptApi(teacher1Client);
+        StudentTranscriptClaim claim = api.getStudentClaimOfTranscriptVersion(
+                "student1_id",
+                "transcript1_id",
+                "version1_id",
+                "studentTranscriptClaim1_id");
+        List<StudentTranscriptClaim> actual = api.getStudentTranscriptClaims(
+                "student1_id",
+                "transcript1_id",
+                "version1_id", 1, 10);
+
+        assertEquals(studentTranscriptClaim1(), claim);
+        assertTrue(actual.contains(studentTranscriptClaim1()));
+    }
+    @Test
+    void manager_read_student_transcript_version_claim_ok() throws ApiException {
+        ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
+        TranscriptApi api = new TranscriptApi(manager1Client);
+        StudentTranscriptClaim claim = api.getStudentClaimOfTranscriptVersion(
+                "student1_id",
+                "transcript1_id",
+                "version1_id",
+                "studentTranscriptClaim1_id");
+        List<StudentTranscriptClaim> actual = api.getStudentTranscriptClaims(
+                "student1_id",
+                "transcript1_id",
+                "version1_id", 1, 10);
+
+        assertEquals(studentTranscriptClaim1(), claim);
+        assertTrue(actual.contains(studentTranscriptClaim1()));
     }
 
 
