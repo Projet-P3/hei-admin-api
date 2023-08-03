@@ -1784,7 +1784,7 @@ components:
           items:
             $ref: '#/components/schemas/StudentExamGrade'
 
-    StudentTranscriptVersion:
+    TranscriptVersion:
       type: object
       properties:
         id:
