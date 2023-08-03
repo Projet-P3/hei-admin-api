@@ -1800,7 +1800,7 @@ components:
         creation_datetime:
           type: string
           format: date-time
-    StudentTranscriptClaim:
+    TranscriptClaim:
       type: object
       properties:
         id:
