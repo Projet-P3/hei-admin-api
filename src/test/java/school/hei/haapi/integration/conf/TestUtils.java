@@ -445,6 +445,17 @@ public class TestUtils {
   }
 
 
+  public static StudentTranscriptClaim studentTranscriptClaim(){
+    return new StudentTranscriptClaim()
+            .id("studentTranscriptClaim1_id")
+            .transcriptId("transcript1_id")
+            .transcriptVersionId("version1_id")
+            .status(StudentTranscriptClaim.StatusEnum.OPEN)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .reason("web2 should be 20");
+  }
+
   public static boolean isBefore(String a, String b) {
     return a.compareTo(b) < 0;
   }
