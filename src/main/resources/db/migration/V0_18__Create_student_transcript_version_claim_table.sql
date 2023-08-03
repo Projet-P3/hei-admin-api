@@ -9,9 +9,12 @@ $$;
 
 create table if not exists "transcript_version_claim"
 (
-    id  varchar     primary key     not null,
-    transcript_id       varchar     references "transcript" (id) not null,
-    version_id  varchar references "transcript-version" (id) not null,
+    id   varchar
+        constraint transcript_version_claim_pk primary key default uuid_generate_v4(),
+    transcript_id       varchar
+        constraint transcript_id_fk references "transcript" (id),
+    version_id  varchar
+        constraint transcript_version_id_fk references "transcript_version" (id),
     status    status    not null,
     creation_datetime    timestamp with time zone not null,
     closed_datetime    timestamp with time zone not null,
