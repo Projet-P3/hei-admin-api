@@ -17,6 +17,15 @@ import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsResponse;
 
+import java.io.IOException;
+import java.lang.Exception;
+import java.net.ServerSocket;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -385,7 +394,7 @@ public class TestUtils {
 
   public static StudentTranscriptVersion studentTranscriptVersion1(){
     return new StudentTranscriptVersion()
-            .id(TRANSCRIPT_VERSION1_ID)
+            .id(VERSION1_ID)
             .transcriptId(transcript1().getId())
             .ref(2)
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
@@ -394,7 +403,7 @@ public class TestUtils {
   }
   public static StudentTranscriptVersion studentTranscriptVersion2(){
     return new StudentTranscriptVersion()
-            .id(TRANSCRIPT_VERSION2_ID)
+            .id(VERSION2_ID)
             .transcriptId(transcript2().getId())
             .ref(2)
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
@@ -403,7 +412,7 @@ public class TestUtils {
   }
   public static StudentTranscriptVersion studentTranscriptVersion3(){
     return new StudentTranscriptVersion()
-            .id(TRANSCRIPT_VERSION3_ID)
+            .id(VERSION3_ID)
             .transcriptId(transcript3().getId())
             .ref(2)
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
@@ -411,11 +420,23 @@ public class TestUtils {
             .createdByUserRole(String.valueOf(school.hei.haapi.model.User.Role.STUDENT));
   }
 
+
+
+  public static StudentTranscriptClaim studentTranscriptClaim1(){
+    return new StudentTranscriptClaim()
+            .id("studentTranscriptClaim1_id")
+            .transcriptId("transcript1_id")
+            .transcriptVersionId("transcriptVersion1_id")
+            .status(StudentTranscriptClaim.StatusEnum.OPEN)
+            .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
+            .reason("web2 should be 20");
+  }
   public static StudentTranscriptClaim studentTranscriptClaim2(){
     return new StudentTranscriptClaim()
-            .id(CLAIM2_ID)
-            .transcriptId(transcript2().getId())
-            .transcriptVersionId(studentTranscriptVersion2().getId())
+            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM2_ID)
+            .transcriptId(TRANSCRIPT2_ID)
+            .transcriptVersionId(VERSION2_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
             .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
@@ -423,9 +444,9 @@ public class TestUtils {
   }
   public static StudentTranscriptClaim studentTranscriptClaim3(){
     return new StudentTranscriptClaim()
-            .id(CLAIM3_ID)
-            .transcriptId(transcript3().getId())
-            .transcriptVersionId(studentTranscriptVersion1().getId())
+            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM3_ID)
+            .transcriptId(TRANSCRIPT3_ID)
+            .transcriptVersionId(VERSION3_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
             .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
