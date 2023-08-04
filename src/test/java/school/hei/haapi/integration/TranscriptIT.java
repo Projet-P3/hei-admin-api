@@ -27,9 +27,9 @@ import java.util.List;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
+import static school.hei.haapi.integration.conf.TestUtils.STUDENT1_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static school.hei.haapi.integration.conf.TestUtils.*;
-
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = TranscriptIT.ContextInitializer.class)
