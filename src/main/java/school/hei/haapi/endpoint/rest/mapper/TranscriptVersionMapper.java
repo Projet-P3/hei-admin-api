@@ -11,8 +11,8 @@ public class TranscriptVersionMapper {
                 .transcriptId(version.getTranscript().getId())
                 .id(version.getId())
                 .ref(version.getRef())
-                .creationDatetime(version.getCreationDateTime())
-                .createdByUserId(version.getCreatedByUser().getId())
+                .creationDatetime(version.getCreationDatetime())
+                .createdByUserId(version.getCreatedByUserId())
                 .createdByUserRole(version.getCreatedByUserRole());
     }
 }
