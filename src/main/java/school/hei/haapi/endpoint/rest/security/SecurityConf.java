@@ -1,5 +1,6 @@
 package school.hei.haapi.endpoint.rest.security;
 
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -113,7 +114,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         .antMatchers(GET, "/courses").authenticated()
         .antMatchers(PUT, "/courses/**").hasAnyRole(MANAGER.getRole())
         .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_VERSION_RAW)).hasAnyRole(STUDENT.getRole())
-        .antMatchers(GET, TRANSCRIPT_VERSION_RAW).hasAnyRole(MANAGER.getRole(), TEACHER.getRole()) 
+        .antMatchers(GET, TRANSCRIPT_VERSION_RAW).hasAnyRole(MANAGER.getRole(), TEACHER.getRole())
         .requestMatchers(new SelfMatcher(GET, STUDENT_COURSE)).hasAnyRole(STUDENT.getRole())
         .antMatchers(GET, STUDENT_COURSE).hasAnyRole(TEACHER.getRole(), MANAGER.getRole())
         .antMatchers(PUT, STUDENT_COURSE).hasAnyRole(MANAGER.getRole())
