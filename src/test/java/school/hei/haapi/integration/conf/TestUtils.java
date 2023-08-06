@@ -453,28 +453,8 @@ public class TestUtils {
             .transcriptId(TRANSCRIPT1_ID)
             .transcriptVersionId(VERSION1_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
-            .reason("web2 should be 20");
-  }
-  public static StudentTranscriptClaim studentTranscriptClaim2(){
-    return new StudentTranscriptClaim()
-            .id(CLAIM2_ID)
-            .transcriptId(TRANSCRIPT2_ID)
-            .transcriptVersionId(VERSION2_ID)
-            .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
-            .reason("web2 should be 20");
-  }
-  public static StudentTranscriptClaim studentTranscriptClaim3(){
-    return new StudentTranscriptClaim()
-            .id(CLAIM3_ID)
-            .transcriptId(TRANSCRIPT3_ID)
-            .transcriptVersionId(VERSION3_ID)
-            .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
             .reason("web2 should be 20");
   }
 
