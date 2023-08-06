@@ -62,4 +62,10 @@ public class TranscriptController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/students/{student_id}/transcripts")
+    public List<Transcript> getStudentTranscripts(@PathVariable("student_id")String studentId) {
+        return service.getTranscriptsByStudentId(studentId).stream()
+                .map(mapper::toRest)
+                .collect(Collectors.toUnmodifiableList());
+    }
 }
