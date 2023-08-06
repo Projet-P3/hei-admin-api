@@ -1,10 +1,6 @@
 package school.hei.haapi.integration;
 
-<<<<<<< HEAD
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-=======
->>>>>>> 9658070 (test: migration test claim)
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
