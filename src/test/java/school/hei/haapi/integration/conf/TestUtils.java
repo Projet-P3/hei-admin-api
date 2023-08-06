@@ -67,9 +67,9 @@ public class TestUtils {
   public static final String VERSION1_ID = "version1_id";
   public static final String VERSION2_ID = "version2_id";
   public static final String VERSION3_ID = "version_id";
-  public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM1_ID = "student_transcript_claim1_id";
-  public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM2_ID = "student_transcript_claim2_id";
-  public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM3_ID = "student_transcript_claim3_id";
+  public static final String CLAIM1_ID = "claim1_id";
+  public static final String CLAIM2_ID = "claim2_id";
+  public static final String CLAIM3_ID = "claim3_id";
   public static final String VERSION1_ID = "version1_id";
   public static final String VERSION2_ID = "version2_id";
   public static final String VERSION3_ID = "version_id";
@@ -437,7 +437,7 @@ public class TestUtils {
 
   public static StudentTranscriptClaim studentTranscriptClaim1(){
     return new StudentTranscriptClaim()
-            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM1_ID)
+            .id(CLAIM1_ID)
             .transcriptId(TRANSCRIPT1_ID)
             .transcriptVersionId(VERSION1_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
@@ -447,7 +447,7 @@ public class TestUtils {
   }
   public static StudentTranscriptClaim studentTranscriptClaim2(){
     return new StudentTranscriptClaim()
-            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM2_ID)
+            .id(CLAIM2_ID)
             .transcriptId(TRANSCRIPT2_ID)
             .transcriptVersionId(VERSION2_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
@@ -457,7 +457,7 @@ public class TestUtils {
   }
   public static StudentTranscriptClaim studentTranscriptClaim3(){
     return new StudentTranscriptClaim()
-            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM3_ID)
+            .id(CLAIM3_ID)
             .transcriptId(TRANSCRIPT3_ID)
             .transcriptVersionId(VERSION3_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
