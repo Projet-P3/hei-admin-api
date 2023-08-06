@@ -134,7 +134,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(STUDENT.getRole())
         .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
         .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
-        .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(STUDENT.getRole())
+        .requestMatchers(new SelfMatcher(PUT, TRANSCRIPT_VERSION_CLAIM)).hasAnyRole(STUDENT.getRole())
         .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
         .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
         .antMatchers("/**").denyAll()
