@@ -29,11 +29,10 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
   private static final String AUTHORIZATION_HEADER = "Authorization";
   private static final String STUDENT_COURSE = "/students/*/courses";
+  private static final String TRANSCRIPT_CLAIM = "/students/*/transcripts/*/versions/*/claims";
   private static final String TRANSCRIPT_RAW = "/students/*/transcripts/*/versions/latest/raw";
 
   private static final String TRANSCRIPT_VERSION_RAW = "/students/*/transcripts/*/versions/*/raw";
-
-  private static final String TRANSCRIPT_CLAIM = "/students/*/transcripts/*/versions/*/claims";
 
   private static final String TRANSCRIPT_VERSION_CLAIM = "/students/*/transcripts/*/versions/*/claims/*";
   private final AuthProvider authProvider;
@@ -125,6 +124,9 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         .requestMatchers(new SelfMatcher(PUT, TRANSCRIPT_VERSION_CLAIM)).hasAnyRole(STUDENT.getRole())
         .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
         .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
+            .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_CLAIM)).hasAnyRole(STUDENT.getRole())
+            .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(TEACHER.getRole())
+            .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(MANAGER.getRole())
             .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_CLAIM)).hasAnyRole(STUDENT.getRole())
             .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(TEACHER.getRole())
             .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(MANAGER.getRole())
