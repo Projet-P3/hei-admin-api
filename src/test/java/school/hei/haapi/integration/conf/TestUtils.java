@@ -67,11 +67,9 @@ public class TestUtils {
   public static final String VERSION1_ID = "version1_id";
   public static final String VERSION2_ID = "version2_id";
   public static final String VERSION3_ID = "version_id";
-  public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM1_ID = "student_transcript_claim1_id";
-  public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM2_ID = "student_transcript_claim2_id";
-  public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM3_ID = "student_transcript_claim3_id";
-
-  public static final String VERSION1_ID = "version1_id";
+  public static final String CLAIM1_ID = "claim1_id";
+  public static final String CLAIM2_ID = "claim2_id";
+  public static final String CLAIM3_ID = "claim3_id";
 
   public static final String BAD_TOKEN = "bad_token";
   public static final String STUDENT1_TOKEN = "student1_token";
@@ -421,7 +419,7 @@ public class TestUtils {
   }
   public static StudentTranscriptClaim studentTranscriptClaim1(){
     return new StudentTranscriptClaim()
-            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM1_ID)
+            .id(CLAIM1_ID)
             .transcriptId(transcript1().getId())
             .transcriptVersionId(studentTranscriptVersion1().getId())
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
@@ -431,7 +429,7 @@ public class TestUtils {
   }
   public static StudentTranscriptClaim studentTranscriptClaim2(){
     return new StudentTranscriptClaim()
-            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM2_ID)
+            .id(CLAIM2_ID)
             .transcriptId(transcript2().getId())
             .transcriptVersionId(studentTranscriptVersion2().getId())
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
@@ -441,7 +439,7 @@ public class TestUtils {
   }
   public static StudentTranscriptClaim studentTranscriptClaim3(){
     return new StudentTranscriptClaim()
-            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM3_ID)
+            .id(CLAIM3_ID)
             .transcriptId(transcript3().getId())
             .transcriptVersionId(studentTranscriptVersion1().getId())
             .status(StudentTranscriptClaim.StatusEnum.OPEN)

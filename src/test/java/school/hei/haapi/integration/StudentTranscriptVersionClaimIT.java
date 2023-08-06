@@ -58,7 +58,7 @@ public class StudentTranscriptVersionClaimIT {
                 "version1_id", 1, 10);
 
         assertEquals(studentTranscriptClaim1(), claim);
-    //    assertTrue(actual.contains(studentTranscriptClaim1()));
+        assertTrue(actual.contains(studentTranscriptClaim1()));
     }
     @Test
     void teacher_read_transcript_version_claim_ok() throws ApiException {
@@ -75,7 +75,7 @@ public class StudentTranscriptVersionClaimIT {
                 "version1_id", 1, 10);
 
         assertEquals(studentTranscriptClaim1(), claim);
-     //  assertTrue(actual.contains(studentTranscriptClaim1()));
+       assertTrue(actual.contains(studentTranscriptClaim1()));
     }
     @Test
     void manager_read_transcript_version_claim_ok() throws ApiException {
@@ -87,16 +87,16 @@ public class StudentTranscriptVersionClaimIT {
                 "version1_id",
                 "studentTranscriptClaim1_id");
 
-/*
+
         List<StudentTranscriptClaim> actual = api.getStudentTranscriptClaims(
                 "student1_id",
                 "transcript1_id",
                 "version1_id", 1, 10);
 
- */
+
 
         assertEquals(studentTranscriptClaim1(), claim);
-       // assertTrue(actual.contains(studentTranscriptClaim1()));
+        assertTrue(actual.contains(studentTranscriptClaim1()));
     }
 
 
