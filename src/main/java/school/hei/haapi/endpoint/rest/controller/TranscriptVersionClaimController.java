@@ -1,6 +1,8 @@
 package school.hei.haapi.endpoint.rest.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import school.hei.haapi.endpoint.rest.mapper.ClaimMapper;
 import school.hei.haapi.model.TranscriptVersionClaim;
 import school.hei.haapi.service.TranscriptVersionClaimService;
