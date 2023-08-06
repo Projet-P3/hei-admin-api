@@ -54,6 +54,30 @@ public class StudentTranscriptClaimIT {
         assertEquals(studentTranscriptClaim1(),actual);
         assertTrue(actual.contains(studentTranscriptClaim1()));
     }
+    @Test
+    void teacher_read_student_transcript_claim_ok() throws ApiException {
+        ApiClient student1Client = anApiClient(TEACHER1_TOKEN);
+        TranscriptApi api = new TranscriptApi(student1Client);
+        List< StudentTranscriptClaim > actual = api.getStudentTranscriptClaims(
+                "student1_id",
+                "transcript1_id",
+                "version1_id", 1, 10);
+
+        assertEquals(studentTranscriptClaim1(),actual);
+        assertTrue(actual.contains(studentTranscriptClaim1()));
+    }
+    @Test
+    void manager_read_student_transcript_claim_ok() throws ApiException {
+        ApiClient student1Client = anApiClient(MANAGER1_TOKEN);
+        TranscriptApi api = new TranscriptApi(student1Client);
+        List< StudentTranscriptClaim > actual = api.getStudentTranscriptClaims(
+                "student1_id",
+                "transcript1_id",
+                "version1_id", 1, 10);
+
+        assertEquals(studentTranscriptClaim1(),actual);
+        assertTrue(actual.contains(studentTranscriptClaim1()));
+    }
 
     static class ContextInitializer extends AbstractContextInitializer {
         public static final int SERVER_PORT = anAvailableRandomPort();
