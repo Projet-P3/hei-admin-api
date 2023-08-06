@@ -1,5 +1,6 @@
 package school.hei.haapi.integration;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -93,12 +94,34 @@ public class StudentTranscriptVersionClaimIT {
                 "transcript1_id",
                 "version1_id", 1, 10);
 
-
-
         assertEquals(studentTranscriptClaim1(), claim);
         assertTrue(actual.contains(studentTranscriptClaim1()));
     }
 
+    @Test
+    void student_write_transcript_version_claim_ok() throws ApiException {
+        ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
+        TranscriptApi api = new TranscriptApi(student1Client);
+
+
+        StudentTranscriptClaim toCreate = api.putStudentClaimsOfTranscriptVersion(
+                "student1_id",
+                "transcript1_id",
+                "version1_id",
+                "claim1_id",
+                studentTranscriptClaim1()
+        );
+        StudentTranscriptClaim update = toCreate.reason("prog4 should 20");
+        StudentTranscriptClaim toUpdate = api.putStudentClaimsOfTranscriptVersion(
+                "student1_id",
+                "transcript1_id",
+                "version1_id",
+                "claim1_id",
+                update
+        );
+        assertEquals(studentTranscriptClaim1(), toCreate);
+        assertEquals(toUpdate,update);
+    }
 
     static class ContextInitializer extends AbstractContextInitializer {
         public static final int SERVER_PORT = anAvailableRandomPort();
