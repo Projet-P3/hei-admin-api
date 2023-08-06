@@ -82,6 +82,7 @@ public class TestUtils {
   public static final String STUDENT1_TOKEN = "student1_token";
   public static final String TEACHER1_TOKEN = "teacher1_token";
   public static final String MANAGER1_TOKEN = "manager1_token";
+  public static final String CLAIM_TOKEN = "studentTranscriptClaim";
 
   public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM = "studentTranscriptClaim1_id";
 
