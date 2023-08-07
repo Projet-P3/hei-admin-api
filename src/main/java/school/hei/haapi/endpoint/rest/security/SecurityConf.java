@@ -14,6 +14,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import school.hei.haapi.model.exception.ForbiddenException;
 
+
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.OPTIONS;
 import static org.springframework.http.HttpMethod.POST;
@@ -105,6 +106,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         .antMatchers(PUT, "/groups/**").hasAnyRole(MANAGER.getRole())
         .antMatchers(GET, "/courses").authenticated()
         .antMatchers(PUT, "/courses/**").hasAnyRole(MANAGER.getRole())
+        .antMatchers(GET,  "/students/*/transcripts/*/versions/**").hasRole(STUDENT.getRole())
         .requestMatchers(new SelfMatcher(GET, STUDENT_COURSE)).hasAnyRole(STUDENT.getRole())
         .antMatchers(GET, STUDENT_COURSE).hasAnyRole(TEACHER.getRole(), MANAGER.getRole())
         .antMatchers(PUT, STUDENT_COURSE).hasAnyRole(MANAGER.getRole())
