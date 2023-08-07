@@ -88,6 +88,7 @@ public class TranscriptIT {
                         .uri(URI.create("http://localhost:" + ContextInitializer.SERVER_PORT+TRANSCRIPT_RAW))
                         .POST(request_body)
                         .setHeader("Content-Type", "application/pdf")
+                        .header("Authorization", "bearer "+MANAGER1_TOKEN)
                         .build(), HttpResponse.BodyHandlers.ofString());
 
         ObjectMapper mapper = new ObjectMapper();
