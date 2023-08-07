@@ -16,6 +16,7 @@ import school.hei.haapi.endpoint.rest.model.CrupdateCourse;
 import school.hei.haapi.endpoint.rest.model.EnableStatus;
 import school.hei.haapi.endpoint.rest.model.Fee;
 import school.hei.haapi.endpoint.rest.model.Teacher;
+import school.hei.haapi.endpoint.rest.model.Transcript;
 import school.hei.haapi.endpoint.rest.model.UpdateStudentCourse;
 import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
@@ -56,6 +57,10 @@ public class TestUtils {
   public static final String COURSE3_ID = "course3_id";
   public static final String COURSE4_ID = "course4_id";
   public static final String COURSE5_ID = "course5_id";
+
+  public static final String TRANSCRIPT1_ID = "transcript1_id";
+
+  public static final String VERSION1_ID = "version1_id";
 
   public static final String BAD_TOKEN = "bad_token";
   public static final String STUDENT1_TOKEN = "student1_token";
@@ -305,6 +310,16 @@ public class TestUtils {
         .totalAmount(5000)
         .comment("Comment")
         .dueDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
+  }
+
+  public static Transcript transcript1() {
+    return new Transcript()
+            .id("transcript1_id")
+            .studentId("student1_id")
+            .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
+            .academicYear(2021)
+            .semester(Transcript.SemesterEnum.S1)
+            .isDefinitive(true);
   }
 
   public static boolean isBefore(String a, String b) {
