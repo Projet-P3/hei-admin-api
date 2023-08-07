@@ -1,29 +1,24 @@
 package school.hei.haapi.service;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.Transcript;
 import school.hei.haapi.repository.TranscriptRepository;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.S3ClientBuilder;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
-import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class TranscriptService {
-    private TranscriptRepository transcriptRepository;
 
-    public List<Transcript> getTranscriptsByStudentId(String studentId) {
-        return transcriptRepository.findTranscriptByStudentId(studentId);
-    }
+    private TranscriptRepository repository;
 
     public File getTranscriptRaw(String versionId) throws IOException {
         String bucketName = "transcript";
@@ -45,5 +40,9 @@ public class TranscriptService {
 
         return tempFile;
     }
+
+  public List<Transcript> crupdateTranscripts(List<Transcript> transcripts) {
+    return repository.saveAll(transcripts);
+  }
 
 }

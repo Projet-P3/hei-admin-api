@@ -1,45 +1,72 @@
 package school.hei.haapi.model;
 
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-
-import java.time.Instant;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "\"transcript\"")
 @Getter
 @Setter
-public class Transcript {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private String id;
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Transcript implements Serializable {
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
-    private User student;
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinColumn(name = "student_id")
+  private User student;
 
-    @Type(type = "pgsql_enum")
-    @Enumerated(EnumType.STRING)
-    private school.hei.haapi.endpoint.rest.model.Transcript.SemesterEnum semester;
+  @Type(type = "pgsql_enum")
+  @Enumerated(EnumType.STRING)
+  private school.hei.haapi.endpoint.rest.model.Transcript.SemesterEnum semester;
 
-    @NotBlank(message = "academic year is mandatory")
-    @Column(nullable = false)
-    private int academicYear;
+  private int academicYear;
 
-    private boolean isDefinitive;
+  private boolean isDefinitive;
 
-    private Instant creationDatetime;
+  @CreationTimestamp
+  private Instant creationDatetime;
 
-    public enum Semester {
-        S1, S2, S3, S4, S5, S6
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    Transcript user = (Transcript) o;
+    return id != null && Objects.equals(id, user.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
+  }
 }
