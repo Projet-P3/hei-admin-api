@@ -32,4 +32,19 @@ public class ClaimMapper {
         return new StudentTranscriptClaim();
 
     }
+
+    public TranscriptVersionClaim toDomain(StudentTranscriptClaim restClaim, String transcriptId, String versionId,String studentId){
+        Transcript transcript = transcriptRepository.getById(transcriptId);
+        TranscriptVersion version = transcriptVersionRepository.getById(versionId);
+        return new TranscriptVersionClaim()
+               .toBuilder()
+                .id(restClaim.getId())
+                .transcript(transcript)
+                .version(version)
+                .status(restClaim.getStatus())
+                .creationDateTime(restClaim.getCreationDatetime())
+                .closedDateTime(restClaim.getClosedDatetime())
+                .reason(restClaim.getReason())
+               .build();
+    }
 }
