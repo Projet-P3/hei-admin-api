@@ -9,5 +9,3 @@ create table if not exists "transcript_version"
     created_by_user_role    varchar not null,
     creation_datetime       timestamp with time zone not null default now()
 );
-
-
