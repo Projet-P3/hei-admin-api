@@ -24,6 +24,10 @@ Parameters:
     Default: '/hei-admin-api/sg'
 
 Resources:
+  DatabaseS3:
+    type: AWS::S3::Bucket
+    Properties:
+      BucketName: Transcript-S3-Bucket
   Database:
     Type: AWS::RDS::DBInstance
     DeletionPolicy: Retain

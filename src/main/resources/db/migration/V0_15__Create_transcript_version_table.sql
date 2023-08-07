@@ -6,7 +6,7 @@ create table if not exists "transcript_version"
     constraint transcript_version_transcript_id_fk references "transcript"(id),
     ref                     integer,
     created_by_user_id      varchar not null,
-    created_by_user_role    varchar,
+    created_by_user_role    varchar not null,
     creation_datetime       timestamp with time zone not null default now()
 );
 
