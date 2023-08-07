@@ -68,6 +68,7 @@ public class StudentTranscriptVersionClaimIT {
                 "version1_id",
                 "studentTranscriptClaim1_id");
         assertEquals(studentTranscriptClaim1(), claim);
+       assertTrue(actual.contains(studentTranscriptClaim1()));
     }
     @Test
     void manager_read_transcript_version_claim_ok() throws ApiException {
