@@ -1,15 +1,16 @@
 package school.hei.haapi.model;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.UpdateTimestamp;
 import school.hei.haapi.endpoint.rest.model.StudentTranscriptClaim;
 import school.hei.haapi.repository.types.PostgresEnumType;
 
 import javax.persistence.*;
 
 import java.time.Instant;
-import java.time.LocalDate;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -19,7 +20,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter
 @TypeDef(name = "pgsql_enum", typeClass = PostgresEnumType.class)
 @ToString
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class TranscriptVersionClaim {
@@ -27,9 +28,7 @@ public class TranscriptVersionClaim {
     @GeneratedValue(strategy = IDENTITY)
     private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "transcript_id", nullable = false)
-    private Transcript transcript;
+    private String transcript_id;
 
     @ManyToOne
     @JoinColumn(name = "version_id", nullable = false)
@@ -39,9 +38,11 @@ public class TranscriptVersionClaim {
     @Enumerated(EnumType.STRING)
     private StudentTranscriptClaim.StatusEnum status;
 
-    private Instant creationDateTime;
+    @CreationTimestamp
+    private Instant creationDatetime;
 
-    private Instant closedDateTime;
+    @UpdateTimestamp
+    private Instant closedDatetime;
 
     private String reason;
 
