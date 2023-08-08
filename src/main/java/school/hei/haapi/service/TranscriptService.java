@@ -49,4 +49,7 @@ public class TranscriptService {
         return repository.saveAll(transcripts);
     }
 
+  public Transcript getStudentTranscriptById(String studentId, String transcriptId) {
+    return repository.getByTranscriptIdAndStudentId(studentId, transcriptId);
+  }
 }

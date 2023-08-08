@@ -47,6 +47,6 @@ public class TranscriptVersionService {
             String transcriptId,
             String versionId
     ) {
-        return transcriptVersionRepository.getStudentTranscriptByVersion(studentId, transcriptId, versionId);
+        return transcriptVersionRepository.getStudentTranscriptByVersionId(studentId, transcriptId, versionId);
     }
 }
