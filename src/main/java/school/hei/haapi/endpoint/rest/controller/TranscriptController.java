@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import school.hei.haapi.endpoint.rest.mapper.TranscriptMapper;
 import school.hei.haapi.endpoint.rest.model.Transcript;
 import school.hei.haapi.service.TranscriptService;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,7 +43,6 @@ public class TranscriptController {
                     .headers(headers)
                     .body(pdfBytes);
         } catch (FileNotFoundException e) {
-
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
 
@@ -60,6 +60,6 @@ public class TranscriptController {
         return service.crupdateTranscripts(toSave).stream()
                 .map(mapper::toRest)
                 .collect(Collectors.toList());
-  }
+    }
 
 }

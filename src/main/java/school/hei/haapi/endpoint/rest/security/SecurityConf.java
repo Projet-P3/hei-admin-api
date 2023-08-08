@@ -31,6 +31,9 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
   private static final String STUDENT_COURSE = "/students/*/courses";
   private static final String TRANSCRIPT_VERSION = "/students/*/transcripts/*/versions/latest/raw";
 
+  private static final String TRANSCRIPT_VERSION_RAW = "/students/*/transcripts/*/versions/*/raw";
+
+
   private final AuthProvider authProvider;
   private final HandlerExceptionResolver exceptionResolver;
 
@@ -106,7 +109,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         .antMatchers(PUT, "/groups/**").hasAnyRole(MANAGER.getRole())
         .antMatchers(GET, "/courses").authenticated()
         .antMatchers(PUT, "/courses/**").hasAnyRole(MANAGER.getRole())
-        .antMatchers(GET,  "/students/*/transcripts/*/versions/**").hasRole(STUDENT.getRole())
+        .antMatchers(GET, TRANSCRIPT_VERSION_RAW).hasAnyRole(MANAGER.getRole(), TEACHER.getRole())
+        .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_VERSION_RAW)).hasAnyRole(STUDENT.getRole())
         .requestMatchers(new SelfMatcher(GET, STUDENT_COURSE)).hasAnyRole(STUDENT.getRole())
         .antMatchers(GET, STUDENT_COURSE).hasAnyRole(TEACHER.getRole(), MANAGER.getRole())
         .antMatchers(PUT, STUDENT_COURSE).hasAnyRole(MANAGER.getRole())
