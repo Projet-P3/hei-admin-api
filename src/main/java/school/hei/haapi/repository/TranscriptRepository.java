@@ -10,9 +10,8 @@ import java.util.List;
 
 @Repository
 public interface TranscriptRepository extends JpaRepository<Transcript, String> {
-  @Query(value = "SELECT t FROM Transcript t WHERE t.id = :transcriptId " +
-          "AND t.studentId.id = :studentId")
-  Transcript findByTranscriptIdAndStudentId(
+  @Query("SELECT t FROM Transcript t WHERE t.id = :transcriptId AND t.student.id = :studentId")
+  Transcript getByTranscriptIdAndStudentId(
           @Param("transcriptId") String transcriptId,
           @Param("studentId") String studentId
   );
