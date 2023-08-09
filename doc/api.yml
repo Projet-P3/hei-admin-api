@@ -334,9 +334,9 @@ paths:
       tags:
         - Transcript
       summary: Create new transcript or update existing transcript
-      operationId: crudStudentTranscripts
+      operationId: crupdateStudentTranscripts
       requestBody:
-        description: Groups to update
+        description: Transcript to update
         required: true
         content:
           application/json:
@@ -437,7 +437,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StudentTranscriptVersion'
+                  $ref: '#/components/schemas/TranscriptVersion'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -476,7 +476,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StudentTranscriptVersion'
+                $ref: '#/components/schemas/TranscriptVersion'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -534,7 +534,7 @@ paths:
       tags:
         - Transcript
       summary: Submit transcript pdf file to latest transcript version
-      operationId: putStudentTranscriptVersionPdf
+      operationId: updateTranscriptPdfVersion
       parameters:
         - name: student_id
           in: path
@@ -559,7 +559,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StudentTranscriptVersion'
+                $ref: '#/components/schemas/TranscriptVersion'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -608,7 +608,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StudentTranscriptClaim'
+                  $ref: '#/components/schemas/TranscriptClaim'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -652,7 +652,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StudentTranscriptClaim'
+                $ref: '#/components/schemas/TranscriptClaim'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -694,14 +694,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StudentTranscriptClaim'
+              $ref: '#/components/schemas/TranscriptClaim'
       responses:
         '200':
           description: List of transcript claim submit.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StudentTranscriptClaim'
+                $ref: '#/components/schemas/TranscriptClaim'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -1822,7 +1822,7 @@ components:
           items:
             $ref: '#/components/schemas/StudentExamGrade'
 
-    StudentTranscriptVersion:
+    TranscriptVersion:
       type: object
       properties:
         id:
@@ -1838,7 +1838,7 @@ components:
         creation_datetime:
           type: string
           format: date-time
-    StudentTranscriptClaim:
+    TranscriptClaim:
       type: object
       properties:
         id:

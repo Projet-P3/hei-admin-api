@@ -17,6 +17,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import school.hei.haapi.model.TranscriptVersion;
+import school.hei.haapi.repository.TranscriptVersionRepository;
 
 @Service
 @AllArgsConstructor
@@ -36,4 +40,13 @@ public class TranscriptVersionService {
 
     return service.downloadPdfFromS3(keyName);
   }
+    private final TranscriptVersionRepository transcriptVersionRepository;
+
+    public TranscriptVersion getStudentTranscriptByVersion(
+            String studentId,
+            String transcriptId,
+            String versionId
+    ) {
+        return transcriptVersionRepository.getStudentTranscriptByVersionId(studentId, transcriptId, versionId);
+    }
 }

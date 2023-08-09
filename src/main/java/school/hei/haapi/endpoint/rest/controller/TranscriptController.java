@@ -1,6 +1,6 @@
 package school.hei.haapi.endpoint.rest.controller;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +18,19 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TranscriptController {
     private final TranscriptService service;
     private final TranscriptMapper mapper;
 
+    @GetMapping("/students/{student_id}/transcripts/{transcript_id}")
+    public Transcript getStudentTranscriptById(
+            @PathVariable String student_id,
+            @PathVariable String transcript_id) {
+        return mapper.toRest(
+                service.getStudentTranscriptById(student_id, transcript_id)
+        );
+    }
 
     @GetMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/raw")
     public ResponseEntity<byte[]> downloadTranscriptRaw(
@@ -63,7 +71,7 @@ public class TranscriptController {
     }
 
     @GetMapping("/students/{student_id}/transcripts")
-    public List<Transcript> getStudentTranscripts(@PathVariable("student_id")String studentId) {
+    public List<Transcript> getStudentTranscripts(@PathVariable("student_id") String studentId) {
         return service.getTranscriptsByStudentId(studentId).stream()
                 .map(mapper::toRest)
                 .collect(Collectors.toUnmodifiableList());

@@ -39,15 +39,13 @@ public class Transcript implements Serializable {
   private String id;
 
   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = "student_id")
+  @JoinColumn(name = "student_id", referencedColumnName = "id")
   private User student;
-
   @Type(type = "pgsql_enum")
   @Enumerated(EnumType.STRING)
   private school.hei.haapi.endpoint.rest.model.Transcript.SemesterEnum semester;
 
-  private int academicYear;
-
+  private Integer academicYear;
   private boolean isDefinitive;
 
   @CreationTimestamp

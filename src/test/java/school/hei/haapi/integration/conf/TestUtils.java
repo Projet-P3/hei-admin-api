@@ -1,5 +1,14 @@
 package school.hei.haapi.integration.conf;
 
+import org.junit.jupiter.api.function.Executable;
+import school.hei.haapi.endpoint.rest.client.ApiClient;
+import school.hei.haapi.endpoint.rest.client.ApiException;
+import school.hei.haapi.endpoint.rest.model.*;
+import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
+import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
+import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
+import software.amazon.awssdk.services.eventbridge.model.PutEventsResponse;
+
 import java.io.IOException;
 import java.lang.Exception;
 import java.net.ServerSocket;
@@ -8,22 +17,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.junit.jupiter.api.function.Executable;
-import school.hei.haapi.endpoint.rest.client.ApiClient;
-import school.hei.haapi.endpoint.rest.client.ApiException;
-import school.hei.haapi.endpoint.rest.model.Course;
-import school.hei.haapi.endpoint.rest.model.CreateFee;
-import school.hei.haapi.endpoint.rest.model.CrupdateCourse;
-import school.hei.haapi.endpoint.rest.model.EnableStatus;
-import school.hei.haapi.endpoint.rest.model.Fee;
-import school.hei.haapi.endpoint.rest.model.Teacher;
-import school.hei.haapi.endpoint.rest.model.Transcript;
-import school.hei.haapi.endpoint.rest.model.UpdateStudentCourse;
-import school.hei.haapi.endpoint.rest.model.*;
-import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
-import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
-import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
-import software.amazon.awssdk.services.eventbridge.model.PutEventsResponse;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +28,6 @@ import static school.hei.haapi.endpoint.rest.model.Fee.StatusEnum.LATE;
 import static school.hei.haapi.endpoint.rest.model.Fee.StatusEnum.PAID;
 import static school.hei.haapi.endpoint.rest.model.Fee.TypeEnum.HARDWARE;
 import static school.hei.haapi.endpoint.rest.model.Fee.TypeEnum.TUITION;
-import static school.hei.haapi.endpoint.rest.model.Transcript.SemesterEnum.S1;
 
 public class TestUtils {
 
@@ -64,12 +56,6 @@ public class TestUtils {
   public static final String TRANSCRIPT1_ID = "transcript1_id";
   public static final String TRANSCRIPT2_ID = "transcript2_id";
   public static final String TRANSCRIPT3_ID = "transcript3_id";
-  public static final String VERSION1_ID = "version1_id";
-  public static final String VERSION2_ID = "version2_id";
-  public static final String VERSION3_ID = "version_id";
-  public static final String CLAIM1_ID = "claim1_id";
-  public static final String CLAIM2_ID = "claim2_id";
-  public static final String CLAIM3_ID = "claim3_id";
   public static final String VERSION1_ID = "version1_id";
   public static final String VERSION2_ID = "version2_id";
   public static final String VERSION3_ID = "version_id";
@@ -398,7 +384,7 @@ public class TestUtils {
 
   public static StudentTranscriptVersion studentTranscriptVersion1(){
     return new StudentTranscriptVersion()
-            .id(TRANSCRIPT_VERSION1_ID)
+            .id(VERSION1_ID)
             .transcriptId(transcript1().getId())
             .ref(2)
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
@@ -407,7 +393,7 @@ public class TestUtils {
   }
   public static StudentTranscriptVersion studentTranscriptVersion2(){
     return new StudentTranscriptVersion()
-            .id(TRANSCRIPT_VERSION2_ID)
+            .id(VERSION2_ID)
             .transcriptId(transcript2().getId())
             .ref(2)
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
@@ -416,7 +402,7 @@ public class TestUtils {
   }
   public static StudentTranscriptVersion studentTranscriptVersion3(){
     return new StudentTranscriptVersion()
-            .id(TRANSCRIPT_VERSION3_ID)
+            .id(VERSION3_ID)
             .transcriptId(transcript3().getId())
             .ref(2)
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
@@ -428,11 +414,22 @@ public class TestUtils {
   public static Transcript transcript1() {
     return new Transcript()
             .id("transcript1_id")
-            .studentId("student1_id")
-            .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
-            .academicYear(2021)
-            .semester(Transcript.SemesterEnum.S1)
-            .isDefinitive(true);
+            .studentId(STUDENT1_ID)
+            .academicYear(2023)
+            .semester(Transcript.SemesterEnum.S3)
+            .isDefinitive(true)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
+  }
+
+
+  public static StudentTranscriptVersion version1() {
+    return new StudentTranscriptVersion()
+            .id("id_version_1")
+            .transcriptId("transcript1_id")
+            .ref(1)
+            .createdByUserId(MANAGER_ID)
+            .createdByUserRole("Manager")
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
   }
 
   public static StudentTranscriptClaim studentTranscriptClaim1(){
