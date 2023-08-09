@@ -14,6 +14,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import school.hei.haapi.model.exception.ForbiddenException;
 
+
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.OPTIONS;
 import static org.springframework.http.HttpMethod.POST;
@@ -29,6 +30,9 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
   private static final String AUTHORIZATION_HEADER = "Authorization";
   private static final String STUDENT_COURSE = "/students/*/courses";
   private static final String TRANSCRIPT_VERSION = "/students/*/transcripts/*/versions/latest/raw";
+
+  private static final String TRANSCRIPT_VERSION_RAW = "/students/*/transcripts/*/versions/*/raw";
+
 
   private final AuthProvider authProvider;
   private final HandlerExceptionResolver exceptionResolver;
@@ -105,6 +109,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         .antMatchers(PUT, "/groups/**").hasAnyRole(MANAGER.getRole())
         .antMatchers(GET, "/courses").authenticated()
         .antMatchers(PUT, "/courses/**").hasAnyRole(MANAGER.getRole())
+        .antMatchers(GET, TRANSCRIPT_VERSION_RAW).hasAnyRole(MANAGER.getRole(), TEACHER.getRole())
+        .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_VERSION_RAW)).hasAnyRole(STUDENT.getRole())
         .requestMatchers(new SelfMatcher(GET, STUDENT_COURSE)).hasAnyRole(STUDENT.getRole())
         .antMatchers(GET, STUDENT_COURSE).hasAnyRole(TEACHER.getRole(), MANAGER.getRole())
         .antMatchers(PUT, STUDENT_COURSE).hasAnyRole(MANAGER.getRole())
