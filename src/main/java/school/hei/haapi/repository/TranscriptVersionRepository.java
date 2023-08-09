@@ -10,7 +10,7 @@ import school.hei.haapi.model.TranscriptVersion;
 @Repository
 public interface TranscriptVersionRepository extends JpaRepository<TranscriptVersion, String> {
     @Query("SELECT tv FROM TranscriptVersion tv " +
-            "JOIN tv.transcriptId t " +
+            "JOIN tv.transcript t " +
             "JOIN t.student s " +
             "WHERE t.id = :transcriptId " +
             "AND s.id = :studentId " +
