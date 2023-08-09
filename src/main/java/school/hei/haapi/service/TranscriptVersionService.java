@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import school.hei.haapi.model.Transcript;
 import school.hei.haapi.model.TranscriptVersion;
 import school.hei.haapi.model.User;
+import school.hei.haapi.model.exception.NotFoundException;
 import school.hei.haapi.repository.TranscriptRepository;
 import school.hei.haapi.repository.TranscriptVersionRepository;
 import school.hei.haapi.repository.UserRepository;
@@ -19,12 +20,17 @@ public class TranscriptVersionService {
   private TranscriptRepository transcriptRepository;
   private S3Service service;
     public byte[] getTranscriptRaw(String studentId, String transcriptId, String versionId)  {
+    User student = userRepository.findById(studentId).orElseThrow(
+            () -> new NotFoundException("user not found")
+    );
+    Transcript transcript = transcriptRepository.findById(transcriptId).orElseThrow(
+            () -> new NotFoundException("transcrit not found")
+    );
+    TranscriptVersion version = repository.findById(versionId).orElseThrow(
+            () -> new NotFoundException("transcript version not found")
+    );
 
-    User student = userRepository.findById(studentId).get();
-    Transcript transcript = transcriptRepository.findById(transcriptId).get();
-    TranscriptVersion version = repository.findById(versionId).get();
-
-    String keyName = student.getRef()+"_"+transcript.getSemester()+"_v"+version.getRef();
+    String keyName = student.getId()+transcriptId;
 
     return service.downloadPdfFromS3(keyName);
   }

@@ -5,8 +5,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import school.hei.haapi.endpoint.rest.mapper.TranscriptMapper;
+import school.hei.haapi.endpoint.rest.mapper.TranscriptVersionMapper;
+import school.hei.haapi.endpoint.rest.model.StudentTranscriptVersion;
 import school.hei.haapi.endpoint.rest.model.Transcript;
+import school.hei.haapi.service.S3Service;
 import school.hei.haapi.service.TranscriptService;
 
 import java.io.File;
@@ -22,6 +26,9 @@ import java.util.stream.Collectors;
 public class TranscriptController {
     private final TranscriptService service;
     private final TranscriptMapper mapper;
+    private final S3Service s3Service;
+    private final TranscriptVersionMapper transcriptVersionMapper;
+    private TranscriptVersionMapper versionMapper;
 
     @GetMapping("/students/{student_id}/transcripts/{transcript_id}")
     public Transcript getStudentTranscriptById(
@@ -37,27 +44,17 @@ public class TranscriptController {
             @PathVariable("student_id") String studentId,
             @PathVariable("transcript_id") String transcriptId,
             @PathVariable("version_id") String versionId) throws IOException {
-        try {
-            String filename = "transcript" + versionId + ".pdf";
-            File pdfFile = service.getTranscriptRaw(versionId);
-            byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData(filename, filename);
-
-
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(pdfBytes);
-        } catch (FileNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-
-            return ResponseEntity.status(500).build();
-        }
+        return null;
     }
 
+    @PostMapping("/students/{student_id}/transcripts/{transcript_id}/versions/latest/raw")
+    public StudentTranscriptVersion putStudentTranscriptVersionPdf(
+            @PathVariable(name = "student_id") String studentId,
+            @PathVariable(name = "transcript_id") String transcriptId,
+            @RequestParam(name = "pdf") MultipartFile transcript_pdf
+    ) throws IOException {
+        return transcriptVersionMapper.toRest(s3Service.uploadFile(transcript_pdf.getBytes(), transcriptId, studentId));
+    }
 
     @PutMapping("/students/{id}/transcripts")
     public List<Transcript> crupdateTranscripts(@PathVariable("id") String studentId,
