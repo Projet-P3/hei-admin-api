@@ -12,8 +12,10 @@ import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.ChecksumAlgorithm;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
+import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
@@ -21,6 +23,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 @AllArgsConstructor
 public class S3Service {
     private final S3conf s3conf;
+    private final S3Client s3Client;
     private final TranscriptVersionRepository transcriptVersionRepository;
     private final UserRepository userRepository;
 
@@ -49,5 +52,19 @@ public class S3Service {
                         .createdByUser(userRepository.findById(studentId).get())
                         .createdByUserRole(userRepository.findById(studentId).get().getRole().toString())
                 .build());
+    }
+
+    public byte[] downloadPdfFromS3(String key){
+        GetObjectRequest objectRequest;
+        try{
+            objectRequest = GetObjectRequest.builder()
+                    .bucket(s3conf.getBucketName())
+                    .key(key)
+                    .build();
+            return s3Client.getObjectAsBytes(objectRequest).asByteArray();
+        } catch (NoSuchKeyException e){
+            System.err.println("S3 file " + key + " not found");
+            return null;
+        }
     }
 }

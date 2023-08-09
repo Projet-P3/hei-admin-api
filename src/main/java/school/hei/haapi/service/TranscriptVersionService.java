@@ -10,7 +10,6 @@ import school.hei.haapi.model.exception.NotFoundException;
 import school.hei.haapi.repository.TranscriptRepository;
 import school.hei.haapi.repository.TranscriptVersionRepository;
 import school.hei.haapi.repository.UserRepository;
-import school.hei.haapi.service.aws.S3Service;
 
 import java.util.Optional;
 
