@@ -3,7 +3,6 @@ package school.hei.haapi.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.Transcript;
-import school.hei.haapi.model.User;
 import school.hei.haapi.model.exception.NotFoundException;
 import school.hei.haapi.repository.TranscriptRepository;
 import school.hei.haapi.repository.UserRepository;
@@ -23,11 +22,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TranscriptService {
     private final TranscriptRepository repository;
-<<<<<<< HEAD
     private final S3Service s3Service;
-=======
     private final UserRepository userRepository;
->>>>>>> a207324 (refactor: Migrate JPQL to JPA in TranscriptRepository and TranscriptVersionRepository)
+
 
     public List<Transcript> getTranscriptsByStudentId(String studentId) {
         return repository.findTranscriptByStudentId(studentId);
