@@ -64,6 +64,15 @@ public class TestUtils {
   public static final String TRANSCRIPT1_ID = "transcript1_id";
   public static final String TRANSCRIPT2_ID = "transcript2_id";
   public static final String TRANSCRIPT3_ID = "transcript3_id";
+  public static final String TRANSCRIPT_VERSION1_ID = "transcript_version1_id";
+  public static final String TRANSCRIPT_VERSION2_ID = "transcript_version2_id";
+  public static final String TRANSCRIPT_VERSION3_ID = "transcript_version_id";
+  public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM1_ID = "student_transcript_claim1_id";
+  public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM2_ID = "student_transcript_claim2_id";
+  public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM3_ID = "student_transcript_claim3_id";
+  public static final String TRANSCRIPT1_ID = "transcript1_id";
+  public static final String TRANSCRIPT2_ID = "transcript2_id";
+  public static final String TRANSCRIPT3_ID = "transcript3_id";
   public static final String VERSION1_ID = "version1_id";
   public static final String VERSION2_ID = "version2_id";
   public static final String VERSION3_ID = "version_id";
