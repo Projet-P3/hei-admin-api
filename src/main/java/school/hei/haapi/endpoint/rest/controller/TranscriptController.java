@@ -10,6 +10,8 @@ import school.hei.haapi.endpoint.rest.mapper.TranscriptMapper;
 import school.hei.haapi.endpoint.rest.mapper.TranscriptVersionMapper;
 import school.hei.haapi.endpoint.rest.model.StudentTranscriptVersion;
 import school.hei.haapi.endpoint.rest.model.Transcript;
+import school.hei.haapi.endpoint.rest.security.AuthProvider;
+import school.hei.haapi.model.User;
 import school.hei.haapi.service.S3Service;
 import school.hei.haapi.service.TranscriptService;
 
@@ -17,6 +19,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.security.Provider;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,7 +56,8 @@ public class TranscriptController {
             @PathVariable(name = "transcript_id") String transcriptId,
             @RequestParam(name = "pdf") MultipartFile transcript_pdf
     ) throws IOException {
-        return transcriptVersionMapper.toRest(s3Service.uploadFile(transcript_pdf.getBytes(), transcriptId, studentId));
+        User user_connected = AuthProvider.getPrincipal().getUser();
+        return transcriptVersionMapper.toRest(s3Service.uploadFile(transcript_pdf.getBytes(), transcriptId, studentId, user_connected.getId()));
     }
 
     @PutMapping("/students/{id}/transcripts")
