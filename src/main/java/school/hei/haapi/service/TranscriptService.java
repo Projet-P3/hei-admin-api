@@ -21,6 +21,7 @@ public class TranscriptService {
     private final TranscriptRepository repository;
     private final S3Service s3Service;
 
+
     public List<Transcript> getTranscriptsByStudentId(String studentId) {
         return repository.findTranscriptByStudentId(studentId);
     }
