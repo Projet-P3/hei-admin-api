@@ -1,16 +1,13 @@
 package school.hei.haapi.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.TranscriptVersion;
 import school.hei.haapi.repository.TranscriptVersionRepository;
 import school.hei.haapi.repository.UserRepository;
-import school.hei.haapi.service.aws.S3conf;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.ChecksumAlgorithm;
 import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
