@@ -74,6 +74,7 @@ public class TestUtils {
 
   public static final String VERSION1_ID = "version1_id";
 
+
   public static final String BAD_TOKEN = "bad_token";
   public static final String STUDENT1_TOKEN = "student1_token";
   public static final String TEACHER1_TOKEN = "teacher1_token";
@@ -422,60 +423,37 @@ public class TestUtils {
 
 
 
-  public static StudentTranscriptClaim studentTranscriptClaim1(){
+  public static StudentTranscriptClaim studentTranscriptVersionClaim1(){
     return new StudentTranscriptClaim()
-            .id("studentTranscriptClaim1_id")
+            .id(STUDENT_TRANSCRIPT_VERSION_CLAIM1_ID)
             .transcriptId("transcript1_id")
-            .transcriptVersionId("transcriptVersion1_id")
+            .transcriptVersionId(VERSION1_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
             .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2020-10-09T08:25:24.00Z"))
             .reason("web2 should be 20");
   }
   public static StudentTranscriptClaim studentTranscriptClaim2(){
     return new StudentTranscriptClaim()
             .id(STUDENT_TRANSCRIPT_VERSION_CLAIM2_ID)
-            .transcriptId(TRANSCRIPT2_ID)
+            .transcriptId("transcript2_id")
             .transcriptVersionId(VERSION2_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+      .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
+      .closedDatetime(Instant.parse("2020-10-09T08:25:24.00Z"))
             .reason("web2 should be 20");
   }
   public static StudentTranscriptClaim studentTranscriptClaim3(){
     return new StudentTranscriptClaim()
             .id(STUDENT_TRANSCRIPT_VERSION_CLAIM3_ID)
-            .transcriptId(TRANSCRIPT3_ID)
+            .transcriptId("transcript3_id")
             .transcriptVersionId(VERSION3_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+      .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
+      .closedDatetime(Instant.parse("2020-10-09T08:25:24.00Z"))
             .reason("web2 should be 20");
   }
 
-
-  public static StudentTranscriptClaim studentTranscriptClaim1(){
-    return new StudentTranscriptClaim()
-            .id("studentTranscriptClaim1_id")
-            .transcriptId("transcript1_id")
-            .transcriptVersionId("transcriptVersion1_id")
-            .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
-            .reason("web2 should be 20");
-  }
-
-
-  public static StudentTranscriptClaim studentTranscriptClaim(){
-    return new StudentTranscriptClaim()
-            .id("studentTranscriptClaim1_id")
-            .transcriptId("transcript1_id")
-            .transcriptVersionId("version1_id")
-            .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
-            .reason("web2 should be 20");
-  }
 
   public static boolean isBefore(String a, String b) {
     return a.compareTo(b) < 0;
