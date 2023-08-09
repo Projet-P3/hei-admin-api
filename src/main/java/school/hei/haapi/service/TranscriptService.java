@@ -20,6 +20,10 @@ import java.util.List;
 public class TranscriptService {
     private final TranscriptRepository repository;
 
+    public List<Transcript> getTranscriptsByStudentId(String studentId) {
+        return repository.findTranscriptByStudentId(studentId);
+    }
+
     public File getTranscriptRaw(String versionId) throws IOException {
         String bucketName = "transcript";
         String keyName = "transcript" + versionId;

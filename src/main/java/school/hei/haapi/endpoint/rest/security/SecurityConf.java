@@ -29,7 +29,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
   private static final String AUTHORIZATION_HEADER = "Authorization";
   private static final String STUDENT_COURSE = "/students/*/courses";
-  private static final String TRANSCRIPT_VERSION = "/students/*/transcripts/*/versions/latest/raw";
+  private static final String TRANSCRIPT_RAW = "/students/*/transcripts/*/versions/latest/raw";
 
   private static final String TRANSCRIPT_VERSION_RAW = "/students/*/transcripts/*/versions/*/raw";
 
@@ -118,7 +118,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         .antMatchers(PUT, STUDENT_COURSE).hasAnyRole(MANAGER.getRole())
         .requestMatchers(new SelfMatcher(GET, "/students/*/transcripts")).hasAnyRole(STUDENT.getRole())
         .antMatchers(GET, "/students/*/transcripts").hasAnyRole(TEACHER.getRole())
-        .antMatchers(POST, TRANSCRIPT_VERSION).hasAnyRole(MANAGER.getRole())
+        .antMatchers(POST, TRANSCRIPT_RAW).hasAnyRole(MANAGER.getRole())
         .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_VERSION_CLAIM)).hasAnyRole(STUDENT.getRole())
         .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
         .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())

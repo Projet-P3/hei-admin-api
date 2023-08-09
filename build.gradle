@@ -135,7 +135,7 @@ dependencies {
     implementation 'io.sentry:sentry-spring-boot-starter:5.5.3'
     implementation 'io.sentry:sentry-logback:5.5.3'
 
-    // https://mvnrepository.com/artifact/software.amazon.awssdk/s3
+    implementation 'software.amazon.awssdk:s3:2.20.116'
     testImplementation group: 'software.amazon.awssdk', name: 's3', version: '2.20.116'
 
 

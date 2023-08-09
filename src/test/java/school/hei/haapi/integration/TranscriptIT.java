@@ -18,11 +18,15 @@ import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import school.hei.haapi.integration.conf.AbstractContextInitializer;
 import school.hei.haapi.integration.conf.TestUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static junit.framework.Assert.assertNotNull;
@@ -72,15 +76,19 @@ public class TranscriptIT {
 
     @Test
     void create_transcript_raw() throws IOException, InterruptedException {
+        final String TRANSCRIPT_RAW = "/students/"+STUDENT1_ID+"transcripts/transcript1_id/versions/latest/raw";
         HttpClient httpClient = HttpClient.newBuilder().build();
-        byte[] transcript_byte = "transcript".getBytes();
+        Path transcript_path = Paths.get("src/test/java/school/hei/haapi/files/transcript_pdf.pdf");
+        byte[] transcript_byte = Files.readAllBytes(transcript_path);
+        //byte[] transcript_byte = "transcript".getBytes();
         HttpRequest.BodyPublisher request_body = HttpRequest.BodyPublishers.ofByteArray(transcript_byte);
 
         HttpResponse<String> response =  httpClient.send(
                 HttpRequest.newBuilder()
-                        .uri(URI.create("http://localhost:" + ContextInitializer.SERVER_PORT))
+                        .uri(URI.create("http://localhost:" + ContextInitializer.SERVER_PORT+TRANSCRIPT_RAW))
                         .POST(request_body)
                         .setHeader("Content-Type", "application/pdf")
+                        .header("Authorization", "Bearer "+MANAGER1_TOKEN)
                         .build(), HttpResponse.BodyHandlers.ofString());
 
         ObjectMapper mapper = new ObjectMapper();
@@ -89,6 +97,7 @@ public class TranscriptIT {
         assertNotNull(responseBody.getCreatedByUserRole());
         assertNotNull(responseBody.getRef());
         assertNotNull(responseBody.getTranscriptId().length());
+        assertTrue(responseBody.getTranscriptId().equals("transcript1_id"));
     }
 
 
