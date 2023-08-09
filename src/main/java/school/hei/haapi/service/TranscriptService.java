@@ -22,7 +22,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TranscriptService {
     private final TranscriptRepository repository;
+    private final S3Service s3Service;
     private final UserRepository userRepository;
+
 
     public List<Transcript> getTranscriptsByStudentId(String studentId) {
         return repository.findTranscriptByStudentId(studentId);

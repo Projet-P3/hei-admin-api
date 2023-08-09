@@ -5,8 +5,8 @@ import school.hei.haapi.model.TranscriptVersion;
 
 @Component
 public class TranscriptVersionMapper {
-    public school.hei.haapi.endpoint.rest.model.TranscriptVersion toRest(TranscriptVersion version) {
-        return new school.hei.haapi.endpoint.rest.model.TranscriptVersion()
+    public school.hei.haapi.endpoint.rest.model.StudentTranscriptVersion toRest(TranscriptVersion version) {
+        return new school.hei.haapi.endpoint.rest.model.StudentTranscriptVersion()
                 .transcriptId(version.getTranscript().getId())
                 .id(version.getId())
                 .ref(version.getRef())
