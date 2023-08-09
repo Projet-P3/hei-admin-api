@@ -1,10 +1,13 @@
 package school.hei.haapi.endpoint.rest.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import school.hei.haapi.endpoint.rest.mapper.TranscriptMapper;
 import school.hei.haapi.endpoint.rest.mapper.TranscriptVersionMapper;
@@ -15,11 +18,7 @@ import school.hei.haapi.model.User;
 import school.hei.haapi.service.S3Service;
 import school.hei.haapi.service.TranscriptService;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.security.Provider;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,14 +39,6 @@ public class TranscriptController {
         return mapper.toRest(
                 service.getStudentTranscriptById(student_id, transcript_id)
         );
-    }
-
-    @GetMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/raw")
-    public ResponseEntity<byte[]> downloadTranscriptRaw(
-            @PathVariable("student_id") String studentId,
-            @PathVariable("transcript_id") String transcriptId,
-            @PathVariable("version_id") String versionId) throws IOException {
-        return null;
     }
 
     @PostMapping("/students/{student_id}/transcripts/{transcript_id}/versions/latest/raw")
