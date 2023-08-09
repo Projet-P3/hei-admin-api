@@ -1,26 +1,22 @@
 package school.hei.haapi.integration.conf;
 
+import org.junit.jupiter.api.function.Executable;
+import school.hei.haapi.endpoint.rest.client.ApiClient;
+import school.hei.haapi.endpoint.rest.client.ApiException;
+import school.hei.haapi.endpoint.rest.model.*;
+import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
+import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
+import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
+import software.amazon.awssdk.services.eventbridge.model.PutEventsResponse;
+
 import java.io.IOException;
+import java.lang.Exception;
 import java.net.ServerSocket;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.junit.jupiter.api.function.Executable;
-import school.hei.haapi.endpoint.rest.client.ApiClient;
-import school.hei.haapi.endpoint.rest.client.ApiException;
-import school.hei.haapi.endpoint.rest.model.Course;
-import school.hei.haapi.endpoint.rest.model.CreateFee;
-import school.hei.haapi.endpoint.rest.model.CrupdateCourse;
-import school.hei.haapi.endpoint.rest.model.EnableStatus;
-import school.hei.haapi.endpoint.rest.model.Fee;
-import school.hei.haapi.endpoint.rest.model.Teacher;
-import school.hei.haapi.endpoint.rest.model.UpdateStudentCourse;
-import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
-import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
-import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
-import software.amazon.awssdk.services.eventbridge.model.PutEventsResponse;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,10 +53,22 @@ public class TestUtils {
   public static final String COURSE4_ID = "course4_id";
   public static final String COURSE5_ID = "course5_id";
 
+  public static final String TRANSCRIPT1_ID = "transcript1_id";
+  public static final String TRANSCRIPT2_ID = "transcript2_id";
+  public static final String TRANSCRIPT3_ID = "transcript3_id";
+  public static final String VERSION1_ID = "version1_id";
+  public static final String VERSION2_ID = "version2_id";
+  public static final String VERSION3_ID = "version_id";
+  public static final String CLAIM1_ID = "claim1_id";
+  public static final String CLAIM2_ID = "claim2_id";
+  public static final String CLAIM3_ID = "claim3_id";
+
   public static final String BAD_TOKEN = "bad_token";
   public static final String STUDENT1_TOKEN = "student1_token";
   public static final String TEACHER1_TOKEN = "teacher1_token";
   public static final String MANAGER1_TOKEN = "manager1_token";
+
+  public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM = "studentTranscriptClaim1_id";
 
   public static ApiClient anApiClient(String token, int serverPort) {
     ApiClient client = new ApiClient();
@@ -306,6 +314,155 @@ public class TestUtils {
         .comment("Comment")
         .dueDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
   }
+  public static Student student1() {
+    Student student = new Student();
+    student.setId("student1_id");
+    student.setFirstName("Ryan");
+    student.setLastName("Andria");
+    student.setEmail("test+ryan@hei.school");
+    student.setRef("STD21001");
+    student.setPhone("0322411123");
+    student.setStatus(EnableStatus.ENABLED);
+    student.setSex(Student.SexEnum.M);
+    student.setBirthDate(LocalDate.parse("2000-01-01"));
+    student.setEntranceDatetime(Instant.parse("2021-11-08T08:25:24.00Z"));
+    student.setAddress("Adr 1");
+    return student;
+  }
+
+  public static Student student2() {
+    Student student = new Student();
+    student.setId("student2_id");
+    student.setFirstName("Two");
+    student.setLastName("Student");
+    student.setEmail("test+student2@hei.school");
+    student.setRef("STD21002");
+    student.setPhone("0322411124");
+    student.setStatus(EnableStatus.ENABLED);
+    student.setSex(Student.SexEnum.F);
+    student.setBirthDate(LocalDate.parse("2000-01-02"));
+    student.setEntranceDatetime(Instant.parse("2021-11-09T08:26:24.00Z"));
+    student.setAddress("Adr 2");
+    return student;
+  }
+
+  public static Student student3() {
+    Student student = new Student();
+    student.setId("student3_id");
+    student.setFirstName("Three");
+    student.setLastName("Student");
+    student.setEmail("test+student3@hei.school");
+    student.setRef("STD21003");
+    student.setPhone("0322411124");
+    student.setStatus(EnableStatus.ENABLED);
+    student.setSex(Student.SexEnum.F);
+    student.setBirthDate(LocalDate.parse("2000-01-02"));
+    student.setEntranceDatetime(Instant.parse("2021-11-09T08:26:24.00Z"));
+    student.setAddress("Adr 2");
+    return student;
+  }
+
+  public static Transcript transcript2(){
+    return new Transcript()
+            .id(TRANSCRIPT2_ID)
+            .studentId(student2().getId())
+            .semester(Transcript.SemesterEnum.S1)
+            .academicYear(2023)
+            .isDefinitive(true)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
+  }
+
+  public static Transcript transcript3(){
+    return new Transcript()
+            .id(TRANSCRIPT3_ID)
+            .studentId(student2().getId())
+            .semester(Transcript.SemesterEnum.S2)
+            .academicYear(2023)
+            .isDefinitive(true)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
+  }
+
+  public static StudentTranscriptVersion studentTranscriptVersion1(){
+    return new StudentTranscriptVersion()
+            .id(VERSION1_ID)
+            .transcriptId(transcript1().getId())
+            .ref(2)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .createdByUserId(student1().getId())
+            .createdByUserRole(String.valueOf(school.hei.haapi.model.User.Role.STUDENT));
+  }
+  public static StudentTranscriptVersion studentTranscriptVersion2(){
+    return new StudentTranscriptVersion()
+            .id(VERSION2_ID)
+            .transcriptId(transcript2().getId())
+            .ref(2)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .createdByUserId(student2().getId())
+            .createdByUserRole(String.valueOf(school.hei.haapi.model.User.Role.STUDENT));
+  }
+  public static StudentTranscriptVersion studentTranscriptVersion3(){
+    return new StudentTranscriptVersion()
+            .id(VERSION3_ID)
+            .transcriptId(transcript3().getId())
+            .ref(2)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .createdByUserId(student2().getId())
+            .createdByUserRole(String.valueOf(school.hei.haapi.model.User.Role.STUDENT));
+  }
+
+
+  public static Transcript transcript1() {
+    return new Transcript()
+            .id("transcript1_id")
+            .studentId(STUDENT1_ID)
+            .academicYear(2023)
+            .semester(Transcript.SemesterEnum.S3)
+            .isDefinitive(true)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
+  }
+
+
+  public static StudentTranscriptVersion version1() {
+    return new StudentTranscriptVersion()
+            .id("id_version_1")
+            .transcriptId("transcript1_id")
+            .ref(1)
+            .createdByUserId(MANAGER_ID)
+            .createdByUserRole("Manager")
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
+  }
+
+  public static StudentTranscriptClaim studentTranscriptClaim1(){
+    return new StudentTranscriptClaim()
+            .id(CLAIM1_ID)
+            .transcriptId(TRANSCRIPT1_ID)
+            .transcriptVersionId(VERSION1_ID)
+            .status(StudentTranscriptClaim.StatusEnum.OPEN)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .reason("web2 should be 20");
+  }
+  public static StudentTranscriptClaim studentTranscriptClaim2(){
+    return new StudentTranscriptClaim()
+            .id(CLAIM2_ID)
+            .transcriptId(TRANSCRIPT2_ID)
+            .transcriptVersionId(VERSION2_ID)
+            .status(StudentTranscriptClaim.StatusEnum.OPEN)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .reason("web2 should be 20");
+  }
+  public static StudentTranscriptClaim studentTranscriptClaim3(){
+    return new StudentTranscriptClaim()
+            .id(CLAIM3_ID)
+            .transcriptId(TRANSCRIPT3_ID)
+            .transcriptVersionId(VERSION3_ID)
+            .status(StudentTranscriptClaim.StatusEnum.OPEN)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .reason("web2 should be 20");
+  }
+
 
   public static boolean isBefore(String a, String b) {
     return a.compareTo(b) < 0;

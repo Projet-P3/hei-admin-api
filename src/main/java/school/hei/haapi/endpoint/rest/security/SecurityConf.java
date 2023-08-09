@@ -14,6 +14,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import school.hei.haapi.model.exception.ForbiddenException;
 
+
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.OPTIONS;
 import static org.springframework.http.HttpMethod.POST;
@@ -28,7 +29,12 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
   private static final String AUTHORIZATION_HEADER = "Authorization";
   private static final String STUDENT_COURSE = "/students/*/courses";
+  private static final String TRANSCRIPT_CLAIM = "/students/*/transcripts/*/versions/*/claims";
+  private static final String TRANSCRIPT_RAW = "/students/*/transcripts/*/versions/latest/raw";
 
+  private static final String TRANSCRIPT_VERSION_RAW = "/students/*/transcripts/*/versions/*/raw";
+
+  private static final String TRANSCRIPT_VERSION_CLAIM = "/students/*/transcripts/*/versions/*/claims/*";
   private final AuthProvider authProvider;
   private final HandlerExceptionResolver exceptionResolver;
 
@@ -93,6 +99,13 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         .antMatchers(GET, "/fees").hasAnyRole(MANAGER.getRole())
         .antMatchers(GET, "/students/*").hasAnyRole(TEACHER.getRole(), MANAGER.getRole())
         .antMatchers(PUT, "/students/**").hasAnyRole(MANAGER.getRole())
+        .requestMatchers(new SelfMatcher(GET, "/students/*/transcripts/*")).hasAnyRole(STUDENT.getRole())
+        .antMatchers(GET, "/students/*/transcripts/*").hasAnyRole(TEACHER.getRole())
+        .antMatchers(GET, "/students/*/transcripts/*").hasAnyRole(MANAGER.getRole())
+        .requestMatchers(new SelfMatcher(GET, "/students/*/transcripts/*/versions/*")).hasAnyRole(STUDENT.getRole())
+        .antMatchers(GET, "/students/*/transcripts/*/versions/*").hasAnyRole(TEACHER.getRole())
+        .antMatchers(GET, "/students/*/transcripts/*/versions/*").hasAnyRole(MANAGER.getRole())
+        .antMatchers(PUT, "/students/*/transcripts").hasAnyRole(MANAGER.getRole())
         .antMatchers(GET, "/teachers").hasAnyRole(MANAGER.getRole())
         .requestMatchers(new SelfMatcher(GET, "/teachers/*")).hasAnyRole(TEACHER.getRole())
         .antMatchers(GET, "/teachers/**").hasAnyRole(MANAGER.getRole())
@@ -103,9 +116,33 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         .antMatchers(PUT, "/groups/**").hasAnyRole(MANAGER.getRole())
         .antMatchers(GET, "/courses").authenticated()
         .antMatchers(PUT, "/courses/**").hasAnyRole(MANAGER.getRole())
+        .antMatchers(GET, TRANSCRIPT_VERSION_RAW).hasAnyRole(MANAGER.getRole(), TEACHER.getRole())
+        .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_VERSION_RAW)).hasAnyRole(STUDENT.getRole())
         .requestMatchers(new SelfMatcher(GET, STUDENT_COURSE)).hasAnyRole(STUDENT.getRole())
         .antMatchers(GET, STUDENT_COURSE).hasAnyRole(TEACHER.getRole(), MANAGER.getRole())
         .antMatchers(PUT, STUDENT_COURSE).hasAnyRole(MANAGER.getRole())
+        .requestMatchers(new SelfMatcher(GET, "/students/*/transcripts")).hasAnyRole(STUDENT.getRole())
+        .antMatchers(GET, "/students/*/transcripts").hasAnyRole(TEACHER.getRole())
+        .antMatchers(POST, TRANSCRIPT_RAW).hasAnyRole(MANAGER.getRole())
+        .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_VERSION_CLAIM)).hasAnyRole(STUDENT.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
+        .requestMatchers(new SelfMatcher(PUT, TRANSCRIPT_VERSION_CLAIM)).hasAnyRole(STUDENT.getRole())
+        .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
+        .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
+            .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_CLAIM)).hasAnyRole(STUDENT.getRole())
+            .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(TEACHER.getRole())
+            .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(MANAGER.getRole())
+            .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_CLAIM)).hasAnyRole(STUDENT.getRole())
+            .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(TEACHER.getRole())
+            .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(MANAGER.getRole())
+        .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_VERSION_CLAIM)).hasAnyRole(STUDENT.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(STUDENT.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
+        .requestMatchers(new SelfMatcher(PUT, TRANSCRIPT_VERSION_CLAIM)).hasAnyRole(STUDENT.getRole())
+        .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
+        .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
         .antMatchers("/**").denyAll()
 
         // disable superfluous protections
