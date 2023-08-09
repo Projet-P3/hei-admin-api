@@ -21,7 +21,7 @@ public class S3conf {
 
     private final String awsS3SecretKey =  System.getenv("AWS_SECRET_ACCESS_KEY");
 
-    private final String awsS3Region =  System.getenv("AWS_REGION");
+    private final String awsS3Region =  System.getenv("AWS_S3_REGION");
 
     @Bean
     public S3Client s3Client() {
