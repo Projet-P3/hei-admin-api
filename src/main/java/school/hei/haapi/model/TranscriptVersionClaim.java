@@ -5,10 +5,17 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.UpdateTimestamp;
-import school.hei.haapi.endpoint.rest.model.TranscriptClaim;
+import school.hei.haapi.endpoint.rest.model.StudentTranscriptClaim;
 import school.hei.haapi.repository.types.PostgresEnumType;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import java.time.Instant;
 
@@ -36,7 +43,7 @@ public class TranscriptVersionClaim {
 
     @Type(type = "pgsql_enum")
     @Enumerated(EnumType.STRING)
-    private TranscriptClaim.StatusEnum status;
+    private StudentTranscriptClaim.StatusEnum status;
 
     @CreationTimestamp
     private Instant creationDatetime;

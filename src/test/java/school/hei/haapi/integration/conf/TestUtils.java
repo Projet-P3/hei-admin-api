@@ -422,8 +422,8 @@ public class TestUtils {
   }
 
 
-  public static StudentTranscriptVersion version1() {
-    return new StudentTranscriptVersion()
+  public static TranscriptVersion version1() {
+    return new TranscriptVersion()
             .id("id_version_1")
             .transcriptId("transcript1_id")
             .ref(1)

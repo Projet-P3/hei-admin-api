@@ -33,7 +33,7 @@ public class S3Service {
                 .bucket(s3conf.getBucketName())
                 .contentType(MediaType.APPLICATION_PDF_VALUE)
                 .checksumAlgorithm(ChecksumAlgorithm.SHA256)
-                .key("tr_"+transcriptId+"!std_"+studentId)
+                .key(studentId+transcriptId)
                 .build();
 
         PutObjectResponse objectResponse = s3conf.s3Client().putObject(request, RequestBody.fromBytes(toUpload));

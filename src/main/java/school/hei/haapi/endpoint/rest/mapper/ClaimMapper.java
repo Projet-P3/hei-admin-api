@@ -2,7 +2,7 @@ package school.hei.haapi.endpoint.rest.mapper;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import school.hei.haapi.endpoint.rest.model.TranscriptClaim;
+import school.hei.haapi.endpoint.rest.model.StudentTranscriptClaim;
 import school.hei.haapi.model.Transcript;
 import school.hei.haapi.model.TranscriptVersion;
 import school.hei.haapi.model.TranscriptVersionClaim;
@@ -17,10 +17,10 @@ public class ClaimMapper {
   private final TranscriptVersionRepository transcriptVersionRepository;
   private final TranscriptVersionClaimService transcriptVersionClaimService;
 
-  public TranscriptClaim toRest(TranscriptVersionClaim domain, String transcriptId, String versionId, String studentId) {
+  public StudentTranscriptClaim toRest(TranscriptVersionClaim domain, String transcriptId, String versionId, String studentId) {
     Transcript transcript = transcriptRepository.getById(transcriptId);
     if(domain.getVersion().getId() == versionId && transcript.getStudent().getId() == studentId){
-      return new TranscriptClaim()
+      return new StudentTranscriptClaim()
         .id(domain.getId())
         .transcriptId(domain.getTranscript_id())
         .transcriptVersionId(domain.getVersion().getId())
@@ -28,10 +28,10 @@ public class ClaimMapper {
         .creationDatetime(domain.getCreationDatetime())
         .closedDatetime(domain.getClosedDatetime())
         .reason(domain.getReason());}
-        return new TranscriptClaim();
+        return new StudentTranscriptClaim();
     }
 
-  public TranscriptVersionClaim toDomain(TranscriptClaim restClaim, String transcriptId, String versionId, String studentId) {
+  public TranscriptVersionClaim toDomain(StudentTranscriptClaim restClaim, String transcriptId, String versionId, String studentId) {
 
     Transcript transcript = transcriptRepository.getById(transcriptId);
     TranscriptVersion version = transcriptVersionRepository.getById(versionId);
