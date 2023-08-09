@@ -24,7 +24,6 @@ public class TranscriptService {
     public List<Transcript> getTranscriptsByStudentId(String studentId) {
         return repository.findTranscriptByStudentId(studentId);
     }
-
     public List<Transcript> crupdateTranscripts(List<Transcript> transcripts) {
         return repository.saveAll(transcripts);
     }
