@@ -15,16 +15,6 @@ public class S3conf {
 
     private String env;
 
-    public S3Conf(
-            @Value("${aws.bucket.name}")
-            String bucketName,
-            @Value("${env}")
-            String env
-    ) {
-        this.bucketName=bucketName;
-        this.env=env;
-    }
-
 
 
     private final String awsS3AccessKeyId = System.getenv("AWS_ACCESS_KEY_ID");
