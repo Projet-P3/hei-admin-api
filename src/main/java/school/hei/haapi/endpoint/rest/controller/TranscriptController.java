@@ -57,7 +57,7 @@ public class TranscriptController {
             @RequestParam(name = "pdf") MultipartFile transcript_pdf
     ) throws IOException {
         User user_connected = AuthProvider.getPrincipal().getUser();
-        return transcriptVersionMapper.toRest(s3Service.uploadFile(transcript_pdf.getBytes(), transcriptId, studentId, user_connected.getId()));
+        return transcriptVersionMapper.toRest(s3Service.uploadFile(transcript_pdf.getBytes(), transcriptId, studentId, user_connected));
     }
 
     @PutMapping("/students/{id}/transcripts")

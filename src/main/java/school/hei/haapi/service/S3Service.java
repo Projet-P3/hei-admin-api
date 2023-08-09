@@ -9,7 +9,7 @@ import school.hei.haapi.model.exception.ForbiddenException;
 import school.hei.haapi.model.exception.NotFoundException;
 import school.hei.haapi.repository.TranscriptVersionRepository;
 import school.hei.haapi.repository.UserRepository;
-import school.hei.haapi.service.aws.S3conf;
+import school.hei.haapi.service.aws.S3Conf;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -24,12 +24,12 @@ import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 @Service
 @AllArgsConstructor
 public class S3Service {
-    private final S3conf s3conf;
+    private final S3Conf s3conf;
     private final S3Client s3Client;
     private final TranscriptVersionRepository transcriptVersionRepository;
     private final UserRepository userRepository;
 
-    public TranscriptVersion uploadFile(byte[] toUpload, String transcriptId, String studentId, String user_connected_id) {
+    public TranscriptVersion uploadFile(byte[] toUpload, String transcriptId, String studentId, User user_connected) {
 
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(s3conf.getBucketName())
@@ -49,14 +49,10 @@ public class S3Service {
                                 .build())
                 .matched();
 
-        if(!user_connected_id.equals(studentId) || !userRepository.findById(user_connected_id).get().getRole().equals(User.Role.MANAGER)) {
-            throw new ForbiddenException("only self user can ");
-        }
-
         return transcriptVersionRepository.save(TranscriptVersion.builder()
                         .ref(transcriptVersionRepository.findAll().size())
-                        .createdByUser(studentId)
-                        .createdByUserRole(userRepository.findById(studentId).get().getRole().toString())
+                        .createdByUser(user_connected.getId())
+                        .createdByUserRole(user_connected.getRole().toString())
                 .build());
     }
 
