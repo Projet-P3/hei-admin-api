@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.TranscriptVersionClaim;
 import school.hei.haapi.repository.TranscriptVersionClaimRepository;
+import school.hei.haapi.model.TranscriptVersionClaim;
+import school.hei.haapi.repository.TranscriptVersionClaimRepository;
 
 import java.util.List;
 
@@ -12,8 +14,15 @@ import java.util.List;
 public class TranscriptVersionClaimService {
     private final TranscriptVersionClaimRepository repository;
 
-    public List<TranscriptVersionClaim> getAllClaimTranscriptVersions(){
+    public List<TranscriptVersionClaim> getAllClaimTranscriptVersions() {
         return repository.findAll();
     }
 
+    public TranscriptVersionClaim getClaimTranscriptVersion(String id){
+        return repository.getById(id);
+    }
+
+    public TranscriptVersionClaim createClaimTranscriptVersion( TranscriptVersionClaim tocrupDate){
+        return  repository.save(tocrupDate);
+    }
 }
