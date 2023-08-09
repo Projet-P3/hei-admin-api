@@ -24,33 +24,6 @@ public class TranscriptController {
     private final TranscriptMapper mapper;
 
 
-    @GetMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/raw")
-    public ResponseEntity<byte[]> downloadTranscriptRaw(
-            @PathVariable("student_id") String studentId,
-            @PathVariable("transcript_id") String transcriptId,
-            @PathVariable("version_id") String versionId) throws IOException {
-        try {
-            String filename = "transcript" + versionId + ".pdf";
-            File pdfFile = service.getTranscriptRaw(versionId);
-            byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData(filename, filename);
-
-
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(pdfBytes);
-        } catch (FileNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-
-            return ResponseEntity.status(500).build();
-        }
-    }
-
-
     @PutMapping("/students/{id}/transcripts")
     public List<Transcript> crupdateTranscripts(@PathVariable("id") String studentId,
                                                 @RequestBody List<Transcript> transcripts) {

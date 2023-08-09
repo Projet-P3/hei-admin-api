@@ -20,27 +20,6 @@ import java.util.List;
 public class TranscriptService {
     private final TranscriptRepository repository;
 
-    public File getTranscriptRaw(String versionId) throws IOException {
-        String bucketName = "transcript";
-        String keyName = "transcript" + versionId;
-
-        S3Client s3Client = S3Client.builder().build();
-
-        GetObjectRequest request = GetObjectRequest.builder()
-                .bucket(bucketName)
-                .key(keyName)
-                .build();
-
-        ResponseInputStream<GetObjectResponse> inputStream = s3Client.getObject(request);
-
-        Path tempFilePath = Files.createTempFile("transcript", ".pdf");
-        File tempFile = tempFilePath.toFile();
-
-        Files.copy(inputStream, tempFilePath);
-
-        return tempFile;
-    }
-
     public List<Transcript> crupdateTranscripts(List<Transcript> transcripts) {
         return repository.saveAll(transcripts);
     }
