@@ -23,6 +23,7 @@ public class S3Service {
     private final S3conf s3conf;
     private final TranscriptVersionRepository transcriptVersionRepository;
     private final UserRepository userRepository;
+
     public TranscriptVersion uploadFile(byte[] toUpload, String transcriptId, String studentId) {
 
         PutObjectRequest request = PutObjectRequest.builder()
@@ -42,6 +43,7 @@ public class S3Service {
                                 .key("tr_"+transcriptId+"std_"+studentId)
                                 .build())
                 .matched();
+
         return transcriptVersionRepository.save(TranscriptVersion.builder()
                         .ref(transcriptVersionRepository.findAll().size())
                         .createdByUser(userRepository.findById(studentId).get())
