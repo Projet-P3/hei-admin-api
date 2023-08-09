@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import school.hei.haapi.endpoint.rest.mapper.ClaimMapper;
-import school.hei.haapi.endpoint.rest.model.StudentTranscriptClaim;
+import school.hei.haapi.endpoint.rest.model.TranscriptClaim;
 import school.hei.haapi.model.TranscriptVersionClaim;
 import school.hei.haapi.service.TranscriptVersionClaimService;
 
@@ -19,7 +19,7 @@ public class TranscriptVersionClaimController {
     private final ClaimMapper mapper;
 
     @GetMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/claims/{claim_id}")
-    public StudentTranscriptClaim getClaimById(
+    public TranscriptClaim getClaimById(
             @PathVariable("student_id") String student_id,
             @PathVariable("transcript_id") String transcript_id,
             @PathVariable("version_id") String version_id,
@@ -33,7 +33,7 @@ public class TranscriptVersionClaimController {
             @PathVariable("transcript_id") String transcript_id,
             @PathVariable("version_id") String version_id,
             @PathVariable("claim_id") String claim_id,
-            @RequestBody StudentTranscriptClaim toWrite) {
+            @RequestBody TranscriptClaim toWrite) {
 
         return mapper.toDomain(toWrite, transcript_id, version_id, student_id);
 
