@@ -10,17 +10,6 @@ import school.hei.haapi.model.exception.NotFoundException;
 import school.hei.haapi.repository.TranscriptRepository;
 import school.hei.haapi.repository.TranscriptVersionRepository;
 import school.hei.haapi.repository.UserRepository;
-import school.hei.haapi.service.aws.S3Service;
-import school.hei.haapi.service.utils.FilePdfUtils;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-import school.hei.haapi.model.TranscriptVersion;
-import school.hei.haapi.repository.TranscriptVersionRepository;
 
 @Service
 @AllArgsConstructor
@@ -30,13 +19,12 @@ public class TranscriptVersionService {
   private UserRepository userRepository;
   private TranscriptRepository transcriptRepository;
   private S3Service service;
-    public byte[] getTranscriptRaw(String studentId, String transcriptId, String versionId)  {
+    public byte[] getTranscriptRaw(String studentId, String transcriptId, String versionId) throws NotFoundException {
+    User student = userRepository.findById(studentId).orElseThrow(
+            () -> new NotFoundException("user not found")
+    );
 
-    User student = userRepository.findById(studentId).get();
-    Transcript transcript = transcriptRepository.findById(transcriptId).get();
-    TranscriptVersion version = repository.findById(versionId).get();
-
-    String keyName = student.getRef()+"_"+transcript.getSemester()+"_v"+version.getRef();
+    String keyName = student.getId()+transcriptId;
 
     return service.downloadPdfFromS3(keyName);
   }
