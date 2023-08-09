@@ -3,7 +3,9 @@ package school.hei.haapi.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.Transcript;
+import school.hei.haapi.model.User;
 import school.hei.haapi.repository.TranscriptRepository;
+import school.hei.haapi.repository.UserRepository;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
@@ -14,11 +16,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class TranscriptService {
     private final TranscriptRepository repository;
+    private final UserRepository userRepository;
 
     public List<Transcript> getTranscriptsByStudentId(String studentId) {
         return repository.findTranscriptByStudentId(studentId);
@@ -50,6 +54,11 @@ public class TranscriptService {
     }
 
   public Transcript getStudentTranscriptById(String studentId, String transcriptId) {
-    return repository.getByTranscriptIdAndStudentId(studentId, transcriptId);
+      Optional<User> user = userRepository.findById(studentId);
+      if (user.isPresent()) {
+          return repository.findByIdAndStudent(transcriptId, user.get());
+      } else {
+          return null;
+      }
   }
 }

@@ -47,6 +47,13 @@ public class TranscriptVersionService {
             String transcriptId,
             String versionId
     ) {
-        return transcriptVersionRepository.getStudentTranscriptByVersionId(studentId, transcriptId, versionId);
+        User user = userRepository.findById(studentId).get();
+        Transcript transcript = transcriptRepository.findById(transcriptId).get();
+
+        if(transcript.getStudent() == user) {
+          return repository.findByIdAndTranscript(versionId,transcript);
+        } else {
+          return null;
+        }
     }
 }
