@@ -3,7 +3,10 @@ package school.hei.haapi.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.Transcript;
+import school.hei.haapi.model.User;
+import school.hei.haapi.model.exception.NotFoundException;
 import school.hei.haapi.repository.TranscriptRepository;
+import school.hei.haapi.repository.UserRepository;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
@@ -14,12 +17,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class TranscriptService {
     private final TranscriptRepository repository;
+<<<<<<< HEAD
     private final S3Service s3Service;
+=======
+    private final UserRepository userRepository;
+>>>>>>> a207324 (refactor: Migrate JPQL to JPA in TranscriptRepository and TranscriptVersionRepository)
 
     public List<Transcript> getTranscriptsByStudentId(String studentId) {
         return repository.findTranscriptByStudentId(studentId);
@@ -50,7 +58,12 @@ public class TranscriptService {
         return repository.saveAll(transcripts);
     }
 
-  public Transcript getStudentTranscriptById(String studentId, String transcriptId) {
-    return repository.getByTranscriptIdAndStudentId(studentId, transcriptId);
-  }
+    public Transcript getStudentTranscriptById(String studentId, String transcriptId) {
+        Optional<Transcript> transcript = repository.findByIdAndStudentId(transcriptId, studentId);
+        if(transcript.isPresent()) {
+            return transcript.get();
+        } else {
+            throw new NotFoundException("Transcript not found");
+        }
+    }
 }
