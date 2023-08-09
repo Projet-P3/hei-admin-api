@@ -44,7 +44,7 @@ public class S3Service {
                 .matched();
         return transcriptVersionRepository.save(TranscriptVersion.builder()
                         .ref(transcriptVersionRepository.findAll().size())
-                        .createdByUserId(studentId)
+                        .createdByUser(userRepository.findById(studentId).get())
                         .createdByUserRole(userRepository.findById(studentId).get().getRole().toString())
                 .build());
     }
