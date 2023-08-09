@@ -78,8 +78,13 @@ public class StudentTranscriptVersionClaimIT {
                 "transcript1_id",
                 "version1_id",
                 "studentTranscriptClaim1_id");
+        List<StudentTranscriptClaim> actual = api.getStudentTranscriptClaims(
+                "student1_id",
+                "transcript1_id",
+                "version1_id", 1, 10);
 
         assertEquals(studentTranscriptClaim1(), claim);
+        assertTrue(actual.contains(studentTranscriptClaim1()));
     }
 
     @Test

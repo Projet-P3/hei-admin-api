@@ -130,6 +130,13 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
             .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_CLAIM)).hasAnyRole(STUDENT.getRole())
             .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(TEACHER.getRole())
             .antMatchers(GET,TRANSCRIPT_CLAIM).hasAnyRole(MANAGER.getRole())
+        .requestMatchers(new SelfMatcher(GET, TRANSCRIPT_VERSION_CLAIM)).hasAnyRole(STUDENT.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(STUDENT.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
+        .antMatchers(GET,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
+        .requestMatchers(new SelfMatcher(PUT, TRANSCRIPT_VERSION_CLAIM)).hasAnyRole(STUDENT.getRole())
+        .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(TEACHER.getRole())
+        .antMatchers(PUT,TRANSCRIPT_VERSION_CLAIM).hasAnyRole(MANAGER.getRole())
         .antMatchers("/**").denyAll()
 
         // disable superfluous protections
