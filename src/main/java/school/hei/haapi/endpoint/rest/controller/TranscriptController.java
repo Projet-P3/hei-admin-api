@@ -53,6 +53,7 @@ public class TranscriptController {
         return transcriptVersionMapper.toRest(s3Service.uploadFile(transcript_pdf.getBytes(), transcriptId, studentId, user_connected));
     }
 
+
     @PutMapping("/students/{id}/transcripts")
     public List<Transcript> crupdateTranscripts(@PathVariable("id") String studentId,
                                                 @RequestBody List<Transcript> transcripts) {
