@@ -27,9 +27,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 @AllArgsConstructor
 public class S3Service {
     private final S3Conf s3conf;
-    private final S3Client s3Client;
     private final TranscriptVersionRepository transcriptVersionRepository;
-    private final UserRepository userRepository;
 
     public TranscriptVersion uploadFile(byte[] toUpload, String transcriptId, String studentId,
                                         User user_connected) {
@@ -60,14 +58,14 @@ public class S3Service {
                 .build());
     }
 
-    public byte[] downloadPdfFromS3(String key) throws NotFoundException{
+    public byte[] gdownloadPdfFromS3(String key) throws NotFoundException{
         GetObjectRequest objectRequest;
         try{
             objectRequest = GetObjectRequest.builder()
                     .bucket(s3conf.getBucketName())
                     .key(key)
                     .build();
-            return s3Client.getObjectAsBytes(objectRequest).asByteArray();
+            return s3conf.s3Client().getObjectAsBytes(objectRequest).asByteArray();
         } catch (NoSuchKeyException e){
             throw new NotFoundException(e.getMessage());
         }
