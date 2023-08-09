@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.TranscriptVersion;
+import school.hei.haapi.model.User;
+import school.hei.haapi.model.exception.ForbiddenException;
+import school.hei.haapi.model.exception.NotFoundException;
 import school.hei.haapi.repository.TranscriptVersionRepository;
 import school.hei.haapi.repository.UserRepository;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
@@ -24,7 +27,7 @@ public class S3Service {
     private final TranscriptVersionRepository transcriptVersionRepository;
     private final UserRepository userRepository;
 
-    public TranscriptVersion uploadFile(byte[] toUpload, String transcriptId, String studentId) {
+    public TranscriptVersion uploadFile(byte[] toUpload, String transcriptId, String studentId, String user_connected_id) {
 
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(s3conf.getBucketName())
@@ -44,14 +47,18 @@ public class S3Service {
                                 .build())
                 .matched();
 
+        if(!user_connected_id.equals(studentId) || !userRepository.findById(user_connected_id).get().getRole().equals(User.Role.MANAGER)) {
+            throw new ForbiddenException("only self user can ");
+        }
+
         return transcriptVersionRepository.save(TranscriptVersion.builder()
                         .ref(transcriptVersionRepository.findAll().size())
-                        .createdByUser(userRepository.findById(studentId).get())
+                        .createdByUser(studentId)
                         .createdByUserRole(userRepository.findById(studentId).get().getRole().toString())
                 .build());
     }
 
-    public byte[] downloadPdfFromS3(String key){
+    public byte[] downloadPdfFromS3(String key) throws NotFoundException{
         GetObjectRequest objectRequest;
         try{
             objectRequest = GetObjectRequest.builder()
@@ -60,8 +67,7 @@ public class S3Service {
                     .build();
             return s3Client.getObjectAsBytes(objectRequest).asByteArray();
         } catch (NoSuchKeyException e){
-            System.err.println("S3 file " + key + " not found");
-            return null;
+            throw new NotFoundException(e.getMessage());
         }
     }
 }

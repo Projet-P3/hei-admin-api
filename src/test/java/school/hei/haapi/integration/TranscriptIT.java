@@ -12,8 +12,8 @@ import school.hei.haapi.SentryConf;
 import school.hei.haapi.endpoint.rest.api.TranscriptApi;
 import school.hei.haapi.endpoint.rest.client.ApiClient;
 import school.hei.haapi.endpoint.rest.client.ApiException;
+import school.hei.haapi.endpoint.rest.model.StudentTranscriptVersion;
 import school.hei.haapi.endpoint.rest.model.Transcript;
-import school.hei.haapi.endpoint.rest.model.TranscriptVersion;
 import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import school.hei.haapi.integration.conf.AbstractContextInitializer;
 import school.hei.haapi.integration.conf.TestUtils;
@@ -91,7 +91,7 @@ public class TranscriptIT {
                         .build(), HttpResponse.BodyHandlers.ofString());
 
         ObjectMapper mapper = new ObjectMapper();
-        TranscriptVersion responseBody = mapper.readValue(response.body(), TranscriptVersion.class);
+        StudentTranscriptVersion responseBody = mapper.readValue(response.body(), StudentTranscriptVersion.class);
 
         assertNotNull(responseBody.getCreatedByUserRole());
         assertNotNull(responseBody.getRef());
@@ -104,7 +104,7 @@ public class TranscriptIT {
         ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
         TranscriptApi api = new TranscriptApi(student1Client);
 
-        assertThrowsForbiddenException(() -> api.crupdateStudentTranscripts(STUDENT1_ID, List.of()));
+        assertThrowsForbiddenException(() -> api.crudStudentTranscripts(STUDENT1_ID, List.of()));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class TranscriptIT {
         ApiClient teacher1Client = anApiClient(TEACHER1_TOKEN);
         TranscriptApi api = new TranscriptApi(teacher1Client);
 
-        assertThrowsForbiddenException(() -> api.crupdateStudentTranscripts(STUDENT1_ID, List.of()));
+        assertThrowsForbiddenException(() -> api.crudStudentTranscripts(STUDENT1_ID, List.of()));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class TranscriptIT {
         ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
         TranscriptApi api = new TranscriptApi(manager1Client);
 
-        List<Transcript> actual = api.crupdateStudentTranscripts(STUDENT1_ID, List.of(transcript1()));
+        List<Transcript> actual = api.crudStudentTranscripts(STUDENT1_ID, List.of(transcript1()));
 
 
         assertEquals(1, actual.size());
@@ -168,7 +168,7 @@ public class TranscriptIT {
     ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
     TranscriptApi api = new TranscriptApi(student1Client);
 
-    TranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
+    StudentTranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
     assertEquals(version1(), actual);
   }
 
@@ -177,7 +177,7 @@ public class TranscriptIT {
     ApiClient teacher1Client = anApiClient(TEACHER1_TOKEN);
     TranscriptApi api = new TranscriptApi(teacher1Client);
 
-    TranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
+    StudentTranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
     assertEquals(version1(), actual);
   }
 
@@ -186,7 +186,7 @@ public class TranscriptIT {
     ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
     TranscriptApi api = new TranscriptApi(manager1Client);
 
-    TranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1();
+    StudentTranscriptVersion actual = api.getStudentTranscriptByVersion(STUDENT1_ID, transcript1().getId(), version1().getId());
     assertEquals(version1(), actual);
   }
 

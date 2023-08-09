@@ -19,15 +19,9 @@ public class TranscriptVersionService {
   private UserRepository userRepository;
   private TranscriptRepository transcriptRepository;
   private S3Service service;
-    public byte[] getTranscriptRaw(String studentId, String transcriptId, String versionId)  {
+    public byte[] getTranscriptRaw(String studentId, String transcriptId, String versionId) throws NotFoundException {
     User student = userRepository.findById(studentId).orElseThrow(
             () -> new NotFoundException("user not found")
-    );
-    Transcript transcript = transcriptRepository.findById(transcriptId).orElseThrow(
-            () -> new NotFoundException("transcrit not found")
-    );
-    TranscriptVersion version = repository.findById(versionId).orElseThrow(
-            () -> new NotFoundException("transcript version not found")
     );
 
     String keyName = student.getId()+transcriptId;
