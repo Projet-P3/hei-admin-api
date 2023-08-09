@@ -1,7 +1,6 @@
 package school.hei.haapi.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.TranscriptVersion;
