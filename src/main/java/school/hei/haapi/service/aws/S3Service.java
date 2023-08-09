@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 @AllArgsConstructor
 public class S3Service {
 
-  private final S3Conf s3Conf;
+  private final S3conf s3Conf;
   private final S3Client s3Client;
 
   public byte[] downloadPdfFromS3(String key){
