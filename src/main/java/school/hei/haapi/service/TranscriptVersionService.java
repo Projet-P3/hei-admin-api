@@ -11,37 +11,39 @@ import school.hei.haapi.repository.TranscriptRepository;
 import school.hei.haapi.repository.TranscriptVersionRepository;
 import school.hei.haapi.repository.UserRepository;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class TranscriptVersionService {
 
-  private TranscriptVersionRepository repository;
-  private UserRepository userRepository;
-  private TranscriptRepository transcriptRepository;
-  private S3Service service;
-    public byte[] getTranscriptRaw(String studentId, String transcriptId, String versionId) throws NotFoundException {
-    User student = userRepository.findById(studentId).orElseThrow(
-            () -> new NotFoundException("user not found")
-    );
-
-    String keyName = student.getId()+transcriptId;
-
-    return service.downloadPdfFromS3(keyName);
-  }
     private final TranscriptVersionRepository transcriptVersionRepository;
+    private TranscriptVersionRepository repository;
+    private UserRepository userRepository;
+    private TranscriptRepository transcriptRepository;
+    private S3Service service;
+
+    public byte[] getTranscriptRaw(String studentId, String transcriptId, String versionId) {
+
+        User student = userRepository.findById(studentId).get();
+        Transcript transcript = transcriptRepository.findById(transcriptId).get();
+        TranscriptVersion version = repository.findById(versionId).get();
+
+        String keyName = student.getRef() + "_" + transcript.getSemester() + "_v" + version.getRef();
+
+        return service.downloadPdfFromS3(keyName);
+    }
 
     public TranscriptVersion getStudentTranscriptByVersion(
             String studentId,
             String transcriptId,
             String versionId
     ) {
-        User user = userRepository.findById(studentId).get();
-        Transcript transcript = transcriptRepository.findById(transcriptId).get();
-
-        if(transcript.getStudent() == user) {
-          return repository.findByIdAndTranscript(versionId,transcript);
+        Optional<TranscriptVersion> transcriptVersion = repository.findByIdAndTranscriptId(versionId,transcriptId);
+        if(transcriptVersion.isPresent()){
+            return transcriptVersion.get();
         } else {
-          return null;
+            throw new NotFoundException("version not found");
         }
     }
 }
