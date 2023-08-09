@@ -29,7 +29,7 @@ public class S3Service {
                 .bucket(s3conf.getBucketName())
                 .contentType(MediaType.APPLICATION_PDF_VALUE)
                 .checksumAlgorithm(ChecksumAlgorithm.SHA256)
-                .key("tr_"+transcriptId+"std_"+studentId)
+                .key("tr_"+transcriptId+"!std_"+studentId)
                 .build();
 
         PutObjectResponse objectResponse = s3conf.s3Client().putObject(request, RequestBody.fromBytes(toUpload));
@@ -44,8 +44,8 @@ public class S3Service {
                 .matched();
         return transcriptVersionRepository.save(TranscriptVersion.builder()
                         .ref(transcriptVersionRepository.findAll().size())
+                        .createdByUserId(studentId)
                         .createdByUserRole(userRepository.findById(studentId).get().getRole().toString())
-                        .createdByUser(userRepository.findById(studentId).get())
                 .build());
     }
 }
