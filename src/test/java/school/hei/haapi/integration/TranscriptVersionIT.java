@@ -18,6 +18,10 @@ import school.hei.haapi.integration.conf.TestUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -45,15 +49,49 @@ class TranscriptVersionIT {
     }
 
     @Test
-    void student_read_transcript_raw_ok() throws ApiException, IOException {
-        ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
-        TranscriptApi api = new TranscriptApi(student1Client);
+    void student_read_transcript_raw_ok() throws ApiException, InterruptedException, IOException {
+        HttpClient httpClient = HttpClient.newBuilder().build();
+        HttpResponse<byte[]> response =  httpClient.send(
+          HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:" + ContextInitializer.SERVER_PORT + "/students/" + STUDENT1_ID + "/transcripts/" + TRANSCRIPT1_ID + "/versions/" + VERSION1_ID + "/raw"))
+            .GET()
+            .setHeader("Content-Type", "application/pdf")
+            .header("Authorization", "Bearer "+STUDENT1_TOKEN)
+            .build(), HttpResponse.BodyHandlers.ofByteArray());
 
+        assertNotNull(response);
+        assertEquals(200, response.statusCode());
+    }
 
-        byte[] pdfBytes = convertFileToByteArray(api.getStudentTranscriptVersionPdf(STUDENT1_ID, TRANSCRIPT1_ID, VERSION1_ID));
+    @Test
+    void teacher_read_transcript_raw_ok() throws ApiException, InterruptedException, IOException  {
+        HttpClient httpClient = HttpClient.newBuilder().build();
+        HttpResponse<byte[]> response =  httpClient.send(
+          HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:" + ContextInitializer.SERVER_PORT + "/students/" + STUDENT1_ID + "/transcripts/" + TRANSCRIPT1_ID + "/versions/" + VERSION1_ID + "/raw"))
+            .GET()
+            .setHeader("Content-Type", "application/pdf")
+            .header("Authorization", "Bearer "+TEACHER1_TOKEN)
+            .build(), HttpResponse.BodyHandlers.ofByteArray());
 
-        assertNotNull(pdfBytes);
+        assertNotNull(response);
+        assertEquals(200, response.statusCode());
 
+    }
+
+    @Test
+    void manager_read_transcript_raw_ok() throws ApiException, InterruptedException, IOException {
+        HttpClient httpClient = HttpClient.newBuilder().build();
+        HttpResponse<byte[]> response =  httpClient.send(
+          HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:" + ContextInitializer.SERVER_PORT + "/students/" + STUDENT1_ID + "/transcripts/" + TRANSCRIPT1_ID + "/versions/" + VERSION1_ID + "/raw"))
+            .GET()
+            .setHeader("Content-Type", "application/pdf")
+            .header("Authorization", "Bearer "+MANAGER1_TOKEN)
+            .build(), HttpResponse.BodyHandlers.ofByteArray());
+
+        assertNotNull(response);
+        assertEquals(200, response.statusCode());
     }
 
     @Test
@@ -62,37 +100,10 @@ class TranscriptVersionIT {
         TranscriptApi api = new TranscriptApi(student1Client);
 
         assertThrowsApiException(
-                "{\"type\":\"403 FORBIDDEN\",\"message\":\"Access is denied\"}",
-                () -> api.getStudentTranscriptVersionPdf(STUDENT2_ID, TRANSCRIPT1_ID, VERSION1_ID));
+          "{\"type\":\"403 FORBIDDEN\",\"message\":\"Access is denied\"}",
+          () -> api.getStudentTranscriptVersionPdf(STUDENT2_ID, TRANSCRIPT1_ID, VERSION1_ID));
     }
 
-    @Test
-    void teacher_read_transcript_raw_ok() throws ApiException, IOException {
-        ApiClient teacherApiClient = anApiClient(TEACHER1_TOKEN);
-        TranscriptApi api = new TranscriptApi(teacherApiClient);
-
-
-        byte[] pdfBytes = convertFileToByteArray(api.getStudentTranscriptVersionPdf(STUDENT1_ID, TRANSCRIPT1_ID, VERSION1_ID));
-
-        assertNotNull(pdfBytes);
-
-    }
-
-    @Test
-    void manager_read_transcript_raw_ok() throws ApiException, IOException {
-        ApiClient managerClient = anApiClient(MANAGER1_TOKEN);
-        TranscriptApi api = new TranscriptApi(managerClient);
-
-
-        byte[] pdfBytes = convertFileToByteArray(api.getStudentTranscriptVersionPdf(STUDENT1_ID, TRANSCRIPT1_ID, VERSION1_ID));
-
-        assertNotNull(pdfBytes);
-    }
-
-
-    private byte[] convertFileToByteArray(File file) throws IOException {
-        return FileUtils.readFileToByteArray(file);
-    }
 
     static class ContextInitializer extends AbstractContextInitializer {
         public static final int SERVER_PORT = anAvailableRandomPort();
