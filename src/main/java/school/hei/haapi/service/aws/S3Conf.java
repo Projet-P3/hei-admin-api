@@ -10,7 +10,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 @Configuration
 @Getter
 public class S3Conf {
-    private String bucketName;
+    private final String bucketName = System.getenv("AWS_BUCKET_NAME");
 
     private String env;
 
