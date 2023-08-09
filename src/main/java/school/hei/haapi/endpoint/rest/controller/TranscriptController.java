@@ -42,13 +42,6 @@ public class TranscriptController {
         );
     }
 
-    @GetMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/raw")
-    public ResponseEntity<byte[]> downloadTranscriptRaw(
-            @PathVariable("student_id") String studentId,
-            @PathVariable("transcript_id") String transcriptId,
-            @PathVariable("version_id") String versionId) throws IOException {
-        return null;
-    }
 
     @PostMapping("/students/{student_id}/transcripts/{transcript_id}/versions/latest/raw")
     public StudentTranscriptVersion putStudentTranscriptVersionPdf(
