@@ -23,7 +23,7 @@ public class TranscriptVersionService {
             () -> new NotFoundException("user not found")
     );
 
-    String keyName = student.getId()+transcriptId;
+    String keyName = "tr_"+transcriptId+"std_"+studentId;
 
     return service.downloadPdfFromS3(keyName);
   }
