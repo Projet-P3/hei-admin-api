@@ -17,7 +17,6 @@ import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
 import school.hei.haapi.integration.conf.AbstractContextInitializer;
 import school.hei.haapi.integration.conf.TestUtils;
 
-import java.util.List;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -60,8 +59,58 @@ public class StudentTranscriptVersionClaimIT {
         assertEquals(claim.getId(), "student_transcript_version_claim1_id");
         assertEquals(claim.getTranscriptVersionId(), "version1_id");
     }
+    @Test
+    void teacher_read_transcript_version_claim_ok() throws ApiException {
+        ApiClient teacher1Client = anApiClient(TEACHER1_TOKEN);
+        TranscriptApi api = new TranscriptApi(teacher1Client);
 
+        StudentTranscriptClaim claim = api.getStudentClaimOfTranscriptVersion(
+          "student1_id",
+          "transcript1_id",
+          "version1_id",
+          "student_transcript_version_claim1_id");
 
+        assertEquals(studentTranscriptVersionClaim1(), claim);
+        assertEquals(claim.getId(), "student_transcript_version_claim1_id");
+        assertEquals(claim.getTranscriptVersionId(), "version1_id");
+    }
+    @Test
+    void manager_read_transcript_version_claim_ok() throws ApiException {
+        ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
+        TranscriptApi api = new TranscriptApi(manager1Client);
+
+        StudentTranscriptClaim claim = api.getStudentClaimOfTranscriptVersion(
+          "student1_id",
+          "transcript1_id",
+          "version1_id",
+          "student_transcript_version_claim1_id");
+
+        assertEquals(studentTranscriptVersionClaim1(), claim);
+        assertEquals(claim.getId(), "student_transcript_version_claim1_id");
+        assertEquals(claim.getTranscriptVersionId(), "version1_id");
+    }
+
+    @Test
+    void student_write_transcript_version_claim_ok() throws ApiException {
+        ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
+        TranscriptApi api = new TranscriptApi(student1Client);
+
+        StudentTranscriptClaim claim = api.getStudentClaimOfTranscriptVersion(
+          "student1_id",
+          "transcript1_id",
+          "version1_id",
+          "student_transcript_version_claim1_id");
+
+        StudentTranscriptClaim update = api.putStudentClaimsOfTranscriptVersion(
+          "student1_id",
+          "transcript1_id",
+          "version1_id",
+          "student_transcript_version_claim1_id",
+          claim
+          );
+
+        assertEquals(claim, update);
+    }
     static class ContextInitializer extends AbstractContextInitializer {
         public static final int SERVER_PORT = anAvailableRandomPort();
 
