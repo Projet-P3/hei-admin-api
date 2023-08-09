@@ -33,6 +33,7 @@ public class TranscriptController {
     private final TranscriptVersionMapper transcriptVersionMapper;
     private TranscriptVersionMapper versionMapper;
 
+
     @GetMapping("/students/{student_id}/transcripts/{transcript_id}")
     public Transcript getStudentTranscriptById(
             @PathVariable String student_id,
