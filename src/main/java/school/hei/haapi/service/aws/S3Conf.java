@@ -1,7 +1,6 @@
 package school.hei.haapi.service.aws;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -10,7 +9,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 
 @Configuration
 @Getter
-public class S3conf {
+public class S3Conf {
     private String bucketName;
 
     private String env;
