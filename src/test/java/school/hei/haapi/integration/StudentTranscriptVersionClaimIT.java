@@ -87,6 +87,7 @@ public class StudentTranscriptVersionClaimIT {
         assertEquals(claim.getId(), "claim1_id");
         assertEquals(claim.getTranscriptVersionId(), "version1_id");
     }
+    */
     @Test
     void manager_read_transcript_version_claim_ok() throws ApiException {
         ApiClient manager1Client = anApiClient(MANAGER1_TOKEN);
@@ -102,8 +103,6 @@ public class StudentTranscriptVersionClaimIT {
         assertEquals(claim.getId(), "claim1_id");
         assertEquals(claim.getTranscriptVersionId(), "version1_id");
     }
-
-     */
 
     /*
     @Test
