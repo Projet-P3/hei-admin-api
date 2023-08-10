@@ -3,6 +3,7 @@ package school.hei.haapi.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.Transcript;
+import school.hei.haapi.model.exception.NotFoundException;
 import school.hei.haapi.repository.TranscriptRepository;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -31,7 +33,12 @@ public class TranscriptService {
         return repository.saveAll(transcripts);
     }
 
-  public Transcript getStudentTranscriptById(String studentId, String transcriptId) {
-    return repository.getByTranscriptIdAndStudentId(studentId, transcriptId);
-  }
+    public Transcript getStudentTranscriptById(String studentId, String transcriptId) {
+        Optional<Transcript> transcript = repository.findByIdAndStudentId(transcriptId, studentId);
+        if(transcript.isPresent()) {
+            return transcript.get();
+        } else {
+            throw new NotFoundException("Transcript not found");
+        }
+    }
 }
