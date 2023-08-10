@@ -9,6 +9,7 @@ import school.hei.haapi.model.exception.NotFoundException;
 import school.hei.haapi.model.User;
 import school.hei.haapi.model.exception.ForbiddenException;
 import school.hei.haapi.model.exception.NotFoundException;
+import school.hei.haapi.repository.TranscriptRepository;
 import school.hei.haapi.repository.TranscriptVersionRepository;
 import school.hei.haapi.repository.UserRepository;
 import school.hei.haapi.service.aws.S3Conf;
@@ -23,11 +24,15 @@ import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
+import java.time.Instant;
+
 @Service
 @AllArgsConstructor
 public class S3Service {
     private final S3Conf s3conf;
+    private final S3Client s3Client;
     private final TranscriptVersionRepository transcriptVersionRepository;
+    private final TranscriptRepository transcriptRepository;
 
     public TranscriptVersion uploadFile(byte[] toUpload, String transcriptId, String studentId,
                                         User user_connected) {
@@ -42,32 +47,37 @@ public class S3Service {
         PutObjectResponse objectResponse =
             s3conf.s3Client().putObject(request, RequestBody.fromBytes(toUpload));
 
-        ResponseOrException<HeadObjectResponse> responseOrException = s3conf.s3Client()
+        ResponseOrException<HeadObjectResponse> responseOrException = s3Client
                 .waiter()
                 .waitUntilObjectExists(
                         HeadObjectRequest.builder()
                                 .bucket(s3conf.getBucketName())
-                                .key("tr_"+transcriptId+"std_"+studentId)
+                                .key(studentId+transcriptId)
                                 .build())
                 .matched();
 
         return transcriptVersionRepository.save(TranscriptVersion.builder()
+                        .transcript(transcriptRepository.findById(transcriptId).orElseThrow(
+                                () -> new NotFoundException("transcript not found")
+                        ))
             .ref(transcriptVersionRepository.findAll().size())
             .createdByUserId(user_connected.getId())
             .createdByUserRole(user_connected.getRole().toString())
+                        .creationDatetime(Instant.now())
                 .build());
     }
 
-    public byte[] gdownloadPdfFromS3(String key) throws NotFoundException{
+    public byte[] downloadPdfFromS3(String key) throws NotFoundException{
         GetObjectRequest objectRequest;
         try{
             objectRequest = GetObjectRequest.builder()
                     .bucket(s3conf.getBucketName())
                     .key(key)
                     .build();
-            return s3conf.s3Client().getObjectAsBytes(objectRequest).asByteArray();
+            return s3Client.getObjectAsBytes(objectRequest).asByteArray();
         } catch (NoSuchKeyException e){
-            throw new NotFoundException(e.getMessage());
+            System.err.println("S3 file " + key + " not found");
+            return null;
         }
     }
 }

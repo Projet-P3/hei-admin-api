@@ -19,13 +19,9 @@ public class TranscriptVersionService {
   private TranscriptRepository transcriptRepository;
   private S3Service service;
     public byte[] getTranscriptRaw(String studentId, String transcriptId, String versionId) throws NotFoundException {
-    User student = userRepository.findById(studentId).orElseThrow(
-            () -> new NotFoundException("user not found")
-    );
+    String keyName = studentId+transcriptId;
 
-    String keyName = "tr_"+transcriptId+"std_"+studentId;
-
-    return service.gdownloadPdfFromS3(keyName);
+    return service.downloadPdfFromS3(keyName);
   }
     private final TranscriptVersionRepository transcriptVersionRepository;
 

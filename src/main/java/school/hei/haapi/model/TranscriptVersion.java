@@ -44,7 +44,6 @@ public class TranscriptVersion implements Serializable {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
-  @NotBlank(message = "id is mandatory")
   private String id;
 
   @ManyToOne
@@ -57,7 +56,6 @@ public class TranscriptVersion implements Serializable {
   private String createdByUserRole;
 
   @CreationTimestamp
-  @NotBlank(message = "creation_datetime is mandatory")
   private Instant creationDatetime;
 
 }
