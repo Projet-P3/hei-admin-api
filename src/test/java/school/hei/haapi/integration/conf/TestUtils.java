@@ -17,6 +17,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.junit.jupiter.api.function.Executable;
+import school.hei.haapi.endpoint.rest.client.ApiClient;
+import school.hei.haapi.endpoint.rest.client.ApiException;
+import school.hei.haapi.endpoint.rest.model.Course;
+import school.hei.haapi.endpoint.rest.model.CreateFee;
+import school.hei.haapi.endpoint.rest.model.CrupdateCourse;
+import school.hei.haapi.endpoint.rest.model.EnableStatus;
+import school.hei.haapi.endpoint.rest.model.Fee;
+import school.hei.haapi.endpoint.rest.model.Teacher;
+import school.hei.haapi.endpoint.rest.model.UpdateStudentCourse;
+import school.hei.haapi.endpoint.rest.security.cognito.CognitoComponent;
+import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
+import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
+import software.amazon.awssdk.services.eventbridge.model.PutEventsResponse;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,6 +42,7 @@ import static school.hei.haapi.endpoint.rest.model.Fee.StatusEnum.LATE;
 import static school.hei.haapi.endpoint.rest.model.Fee.StatusEnum.PAID;
 import static school.hei.haapi.endpoint.rest.model.Fee.TypeEnum.HARDWARE;
 import static school.hei.haapi.endpoint.rest.model.Fee.TypeEnum.TUITION;
+import static school.hei.haapi.endpoint.rest.model.Transcript.SemesterEnum.S1;
 
 public class TestUtils {
 
@@ -67,6 +82,7 @@ public class TestUtils {
   public static final String STUDENT1_TOKEN = "student1_token";
   public static final String TEACHER1_TOKEN = "teacher1_token";
   public static final String MANAGER1_TOKEN = "manager1_token";
+  public static final String CLAIM_TOKEN = "studentTranscriptClaim";
 
   public static final String STUDENT_TRANSCRIPT_VERSION_CLAIM = "studentTranscriptClaim1_id";
 
@@ -438,31 +454,22 @@ public class TestUtils {
             .transcriptId(TRANSCRIPT1_ID)
             .transcriptVersionId(VERSION1_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
-            .reason("web2 should be 20");
-  }
-  public static StudentTranscriptClaim studentTranscriptClaim2(){
-    return new StudentTranscriptClaim()
-            .id(CLAIM2_ID)
-            .transcriptId(TRANSCRIPT2_ID)
-            .transcriptVersionId(VERSION2_ID)
-            .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
-            .reason("web2 should be 20");
-  }
-  public static StudentTranscriptClaim studentTranscriptClaim3(){
-    return new StudentTranscriptClaim()
-            .id(CLAIM3_ID)
-            .transcriptId(TRANSCRIPT3_ID)
-            .transcriptVersionId(VERSION3_ID)
-            .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24Z"))
             .reason("web2 should be 20");
   }
 
+
+  public static StudentTranscriptClaim studentTranscriptClaim(){
+    return new StudentTranscriptClaim()
+            .id("studentTranscriptClaim1_id")
+            .transcriptId("transcript1_id")
+            .transcriptVersionId("version1_id")
+            .status(StudentTranscriptClaim.StatusEnum.OPEN)
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24.00Z"))
+            .reason("web2 should be 20");
+  }
 
   public static boolean isBefore(String a, String b) {
     return a.compareTo(b) < 0;

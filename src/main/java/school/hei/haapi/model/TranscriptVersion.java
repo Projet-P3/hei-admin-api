@@ -18,6 +18,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.TypeDef;
+import school.hei.haapi.endpoint.rest.model.StudentTranscriptClaim;
 import school.hei.haapi.repository.types.PostgresEnumType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
