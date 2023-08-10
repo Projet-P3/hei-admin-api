@@ -32,6 +32,6 @@ public class TranscriptService {
     }
 
   public Transcript getStudentTranscriptById(String studentId, String transcriptId) {
-    return repository.getByTranscriptIdAndStudentId(studentId, transcriptId);
+    return repository.getByTranscriptIdAndStudentId(transcriptId, studentId);
   }
 }

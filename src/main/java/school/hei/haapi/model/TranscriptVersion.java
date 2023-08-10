@@ -53,7 +53,7 @@ public class TranscriptVersion implements Serializable {
 
   private int ref;
 
-  private String createdByUser;
+  private String createdByUserId;
   private String createdByUserRole;
 
   @CreationTimestamp

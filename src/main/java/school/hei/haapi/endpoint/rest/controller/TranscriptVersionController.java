@@ -17,9 +17,9 @@ public class TranscriptVersionController {
 
     @GetMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}")
     public StudentTranscriptVersion getStudentTranscriptByVersion(
-            @PathVariable String student_id,
-            @PathVariable String transcript_id,
-            @PathVariable String version_id
+            @PathVariable("student_id") String student_id,
+            @PathVariable("transcript_id") String transcript_id,
+            @PathVariable("version_id") String version_id
     ) {
         return transcriptVersionMapper.toRest(
                 transcriptVersionService.getStudentTranscriptByVersion(student_id, transcript_id, version_id)

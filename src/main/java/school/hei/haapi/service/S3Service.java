@@ -53,7 +53,7 @@ public class S3Service {
 
         return transcriptVersionRepository.save(TranscriptVersion.builder()
             .ref(transcriptVersionRepository.findAll().size())
-            .createdByUser(user_connected.getId())
+            .createdByUserId(user_connected.getId())
             .createdByUserRole(user_connected.getRole().toString())
                 .build());
     }

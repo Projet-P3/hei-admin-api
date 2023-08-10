@@ -36,7 +36,7 @@ import static school.hei.haapi.integration.conf.TestUtils.*;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Testcontainers
-@ContextConfiguration(initializers = FeeIT.ContextInitializer.class)
+@ContextConfiguration(initializers = TranscriptIT.ContextInitializer.class)
 @AutoConfigureMockMvc
 public class TranscriptIT {
   @MockBean
@@ -45,7 +45,7 @@ public class TranscriptIT {
   private CognitoComponent cognitoComponentMock;
 
   private static ApiClient anApiClient(String token) {
-    return TestUtils.anApiClient(token, CourseIT.ContextInitializer.SERVER_PORT);
+    return TestUtils.anApiClient(token, TranscriptIT.ContextInitializer.SERVER_PORT);
   }
 
     @BeforeEach
@@ -75,7 +75,7 @@ public class TranscriptIT {
 
     @Test
     void create_transcript_raw() throws IOException, InterruptedException {
-        final String TRANSCRIPT_RAW = "/students/"+STUDENT1_ID+"transcripts/transcript1_id/versions/latest/raw";
+        final String TRANSCRIPT_RAW = "/students/"+STUDENT1_ID+"/transcripts/transcript1_id/versions/latest/raw";
         HttpClient httpClient = HttpClient.newBuilder().build();
         Path transcript_path = Paths.get("src/test/java/school/hei/haapi/files/transcript_pdf.pdf");
         byte[] transcript_byte = Files.readAllBytes(transcript_path);

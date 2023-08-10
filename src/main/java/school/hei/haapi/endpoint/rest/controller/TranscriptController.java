@@ -46,10 +46,10 @@ public class TranscriptController {
     public StudentTranscriptVersion putStudentTranscriptVersionPdf(
             @PathVariable(name = "student_id") String studentId,
             @PathVariable(name = "transcript_id") String transcriptId,
-            @RequestParam(name = "pdf") MultipartFile transcript_pdf
+            @RequestBody byte[] transcript_pdf
     ) throws IOException {
         User user_connected = AuthProvider.getPrincipal().getUser();
-        return transcriptVersionMapper.toRest(s3Service.uploadFile(transcript_pdf.getBytes(), transcriptId, studentId, user_connected));
+        return transcriptVersionMapper.toRest(s3Service.uploadFile(transcript_pdf, transcriptId, studentId, user_connected));
     }
 
 

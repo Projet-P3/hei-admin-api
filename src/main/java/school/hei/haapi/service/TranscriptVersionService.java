@@ -3,7 +3,6 @@ package school.hei.haapi.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import school.hei.haapi.model.Transcript;
 import school.hei.haapi.model.TranscriptVersion;
 import school.hei.haapi.model.User;
 import school.hei.haapi.model.exception.NotFoundException;
@@ -35,6 +34,7 @@ public class TranscriptVersionService {
             String transcriptId,
             String versionId
     ) {
-        return transcriptVersionRepository.getStudentTranscriptByVersionId(studentId, transcriptId, versionId);
+        return transcriptVersionRepository.getStudentTranscriptByVersionId(transcriptId, studentId, versionId);
     }
 }
+

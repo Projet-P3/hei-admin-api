@@ -415,20 +415,20 @@ public class TestUtils {
     return new Transcript()
             .id("transcript1_id")
             .studentId(STUDENT1_ID)
-            .academicYear(2023)
-            .semester(Transcript.SemesterEnum.S3)
+            .academicYear(2021)
+            .semester(Transcript.SemesterEnum.S1)
             .isDefinitive(true)
-            .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
+            .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"));
   }
 
 
   public static StudentTranscriptVersion version1() {
     return new StudentTranscriptVersion()
-            .id("id_version_1")
+            .id("version1_id")
             .transcriptId("transcript1_id")
-            .ref(1)
+            .ref(2)
             .createdByUserId(MANAGER_ID)
-            .createdByUserRole("Manager")
+            .createdByUserRole("MANAGER")
             .creationDatetime(Instant.parse("2021-12-08T08:25:24.00Z"));
   }
 
