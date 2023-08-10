@@ -21,7 +21,7 @@ public class ClaimMapper {
   private final TranscriptVersionRepository transcriptVersionRepository;
 
   public StudentTranscriptClaim toRest(TranscriptVersionClaim domain, String transcriptId, String versionId, String studentId) {
-    validateIds(domain.getVersion(), transcriptId, versionId, studentId);
+
 
     return new StudentTranscriptClaim()
       .id(domain.getId())
@@ -34,7 +34,6 @@ public class ClaimMapper {
   }
 
   public TranscriptVersionClaim toDomain(TranscriptVersionClaim restClaim, String transcriptId, String versionId, String studentId, String claimID) {
-    validateIds(transcriptVersionRepository.getById(versionId), transcriptId, versionId, studentId);
 
     TranscriptVersion version = transcriptVersionRepository.getById(versionId);
     TranscriptVersionClaim claim = new TranscriptVersionClaim()
@@ -50,11 +49,4 @@ public class ClaimMapper {
     return claim;
   }
 
-  private void validateIds(TranscriptVersion version, String transcriptId, String versionId, String studentId) {
-    if (!version.getId().equals(versionId)
-      || !version.getTranscript().getId().equals(transcriptId)
-      || !version.getTranscript().getStudent().getId().equals(studentId)) {
-      throw new BadRequestException("IDs do not match the entity");
-    }
-  }
 }

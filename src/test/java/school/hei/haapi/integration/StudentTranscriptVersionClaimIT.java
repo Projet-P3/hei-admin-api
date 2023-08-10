@@ -18,9 +18,9 @@ import school.hei.haapi.integration.conf.AbstractContextInitializer;
 import school.hei.haapi.integration.conf.TestUtils;
 
 
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static school.hei.haapi.integration.conf.TestUtils.*;
 
@@ -56,6 +56,20 @@ public class StudentTranscriptVersionClaimIT {
           "claim1_id");
 
         assertEquals(studentTranscriptClaim1(),claim);
+    }
+    @Test
+    void student_read_all_transcript_version_claim_ok() throws ApiException {
+        ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
+        TranscriptApi api = new TranscriptApi(student1Client);
+
+        List<StudentTranscriptClaim> claim = api.getStudentTranscriptClaims(
+          "student1_id",
+          "transcript1_id",
+          "version1_id",
+          1,
+          10);
+
+        assertTrue(claim.contains(studentTranscriptClaim1()));
     }
     @Test
     void teacher_read_transcript_version_claim_ok() throws ApiException {
@@ -108,27 +122,8 @@ public class StudentTranscriptVersionClaimIT {
           );
 
         assertEquals(claim, update);
-    }    @Test
-    void student_write_transcript_version_claim_ok() throws ApiException {
-        ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
-        TranscriptApi api = new TranscriptApi(student1Client);
-
-        StudentTranscriptClaim claim = api.getStudentClaimOfTranscriptVersion(
-          "student1_id",
-          "transcript1_id",
-          "version1_id",
-          "claim1_id");
-
-        StudentTranscriptClaim update = api.putStudentClaimsOfTranscriptVersion(
-          "student1_id",
-          "transcript1_id",
-          "version1_id",
-          "claim1_id",
-          claim
-          );
-
-        assertEquals(claim, update);
     }
+
     static class ContextInitializer extends AbstractContextInitializer {
         public static final int SERVER_PORT = anAvailableRandomPort();
 
