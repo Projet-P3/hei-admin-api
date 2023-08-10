@@ -454,8 +454,8 @@ public class TestUtils {
             .transcriptId(TRANSCRIPT1_ID)
             .transcriptVersionId(VERSION1_ID)
             .status(StudentTranscriptClaim.StatusEnum.OPEN)
-            .creationDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
-            .closedDatetime(Instant.parse("2020-10-08T08:25:24.00Z"))
+            .creationDatetime(Instant.parse("2021-12-08T08:25:24Z"))
+            .closedDatetime(Instant.parse("2021-12-09T08:25:24Z"))
             .reason("web2 should be 20");
   }
 

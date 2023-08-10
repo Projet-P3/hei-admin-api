@@ -53,11 +53,9 @@ public class StudentTranscriptVersionClaimIT {
           "student1_id",
           "transcript1_id",
           "version1_id",
-          "student_transcript_version_claim1_id");
+          "claim1_id");
 
-        assertEquals(studentTranscriptVersionClaim1(), claim);
-        assertEquals(claim.getId(), "student_transcript_version_claim1_id");
-        assertEquals(claim.getTranscriptVersionId(), "version1_id");
+        assertEquals(studentTranscriptClaim1(),claim);
     }
     @Test
     void teacher_read_transcript_version_claim_ok() throws ApiException {
@@ -68,10 +66,10 @@ public class StudentTranscriptVersionClaimIT {
           "student1_id",
           "transcript1_id",
           "version1_id",
-          "student_transcript_version_claim1_id");
+          "claim1_id");
 
-        assertEquals(studentTranscriptVersionClaim1(), claim);
-        assertEquals(claim.getId(), "student_transcript_version_claim1_id");
+        assertEquals(studentTranscriptClaim1(), claim);
+        assertEquals(claim.getId(), "claim1_id");
         assertEquals(claim.getTranscriptVersionId(), "version1_id");
     }
     @Test
@@ -83,10 +81,10 @@ public class StudentTranscriptVersionClaimIT {
           "student1_id",
           "transcript1_id",
           "version1_id",
-          "student_transcript_version_claim1_id");
+          "claim1_id");
 
-        assertEquals(studentTranscriptVersionClaim1(), claim);
-        assertEquals(claim.getId(), "student_transcript_version_claim1_id");
+        assertEquals(studentTranscriptClaim1(), claim);
+        assertEquals(claim.getId(), "claim1_id");
         assertEquals(claim.getTranscriptVersionId(), "version1_id");
     }
 
@@ -99,13 +97,33 @@ public class StudentTranscriptVersionClaimIT {
           "student1_id",
           "transcript1_id",
           "version1_id",
-          "student_transcript_version_claim1_id");
+          "claim1_id");
 
         StudentTranscriptClaim update = api.putStudentClaimsOfTranscriptVersion(
           "student1_id",
           "transcript1_id",
           "version1_id",
-          "student_transcript_version_claim1_id",
+          "claim1_id",
+          claim
+          );
+
+        assertEquals(claim, update);
+    }    @Test
+    void student_write_transcript_version_claim_ok() throws ApiException {
+        ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
+        TranscriptApi api = new TranscriptApi(student1Client);
+
+        StudentTranscriptClaim claim = api.getStudentClaimOfTranscriptVersion(
+          "student1_id",
+          "transcript1_id",
+          "version1_id",
+          "claim1_id");
+
+        StudentTranscriptClaim update = api.putStudentClaimsOfTranscriptVersion(
+          "student1_id",
+          "transcript1_id",
+          "version1_id",
+          "claim1_id",
           claim
           );
 
