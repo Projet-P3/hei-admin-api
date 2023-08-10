@@ -1,6 +1,7 @@
 package school.hei.haapi.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -79,7 +80,6 @@ public class TranscriptIT {
         HttpClient httpClient = HttpClient.newBuilder().build();
         Path transcript_path = Paths.get("src/test/java/school/hei/haapi/files/transcript_pdf.pdf");
         byte[] transcript_byte = Files.readAllBytes(transcript_path);
-        //byte[] transcript_byte = "transcript".getBytes();
         HttpRequest.BodyPublisher request_body = HttpRequest.BodyPublishers.ofByteArray(transcript_byte);
 
         HttpResponse<String> response =  httpClient.send(
@@ -90,7 +90,7 @@ public class TranscriptIT {
                         .header("Authorization", "Bearer "+MANAGER1_TOKEN)
                         .build(), HttpResponse.BodyHandlers.ofString());
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
         StudentTranscriptVersion responseBody = mapper.readValue(response.body(), StudentTranscriptVersion.class);
 
         assertNotNull(responseBody.getCreatedByUserRole());
