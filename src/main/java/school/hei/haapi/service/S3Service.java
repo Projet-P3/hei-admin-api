@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import school.hei.haapi.model.TranscriptVersion;
 import school.hei.haapi.model.User;
+import school.hei.haapi.model.exception.ApiException;
 import school.hei.haapi.model.exception.NotFoundException;
 import school.hei.haapi.model.User;
 import school.hei.haapi.model.exception.ForbiddenException;
@@ -47,14 +48,9 @@ public class S3Service {
         PutObjectResponse objectResponse =
             s3conf.s3Client().putObject(request, RequestBody.fromBytes(toUpload));
 
-        ResponseOrException<HeadObjectResponse> responseOrException = s3Client
-                .waiter()
-                .waitUntilObjectExists(
-                        HeadObjectRequest.builder()
-                                .bucket(s3conf.getBucketName())
-                                .key(studentId+transcriptId)
-                                .build())
-                .matched();
+        if(objectResponse == null ) {
+            throw new ApiException(ApiException.ExceptionType.SERVER_EXCEPTION, "transcript raw cannot be saved");
+        }
 
         return transcriptVersionRepository.save(TranscriptVersion.builder()
                         .transcript(transcriptRepository.findById(transcriptId).orElseThrow(
