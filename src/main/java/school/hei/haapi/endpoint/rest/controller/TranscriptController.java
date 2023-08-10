@@ -33,6 +33,7 @@ public class TranscriptController {
     private final TranscriptVersionMapper transcriptVersionMapper;
     private TranscriptVersionMapper versionMapper;
 
+
     @GetMapping("/students/{student_id}/transcripts/{transcript_id}")
     public Transcript getStudentTranscriptById(
             @PathVariable String student_id,
@@ -42,13 +43,6 @@ public class TranscriptController {
         );
     }
 
-    @GetMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/raw")
-    public ResponseEntity<byte[]> downloadTranscriptRaw(
-            @PathVariable("student_id") String studentId,
-            @PathVariable("transcript_id") String transcriptId,
-            @PathVariable("version_id") String versionId) throws IOException {
-        return null;
-    }
 
     @PostMapping("/students/{student_id}/transcripts/{transcript_id}/versions/latest/raw")
     public StudentTranscriptVersion putStudentTranscriptVersionPdf(
@@ -59,6 +53,7 @@ public class TranscriptController {
         User user_connected = AuthProvider.getPrincipal().getUser();
         return transcriptVersionMapper.toRest(s3Service.uploadFile(transcript_pdf.getBytes(), transcriptId, studentId, user_connected));
     }
+
 
     @PutMapping("/students/{id}/transcripts")
     public List<Transcript> crupdateTranscripts(@PathVariable("id") String studentId,

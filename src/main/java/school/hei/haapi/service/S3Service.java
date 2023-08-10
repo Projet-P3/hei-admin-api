@@ -56,7 +56,7 @@ public class S3Service {
                 .build());
     }
 
-    public byte[] downloadPdfFromS3(String key) throws NotFoundException{
+    public byte[] gdownloadPdfFromS3(String key) throws NotFoundException{
         GetObjectRequest objectRequest;
         try{
             objectRequest = GetObjectRequest.builder()
