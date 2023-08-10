@@ -1903,20 +1903,6 @@ components:
           type: integer
         total_hours:
           type: integer
-    Transcript:
-      type: object
-      properties:
-        id:
-          type: string
-        fileUrl:
-          type: string
-          example: "https://presignedurldemo.s3.eu-west-2.amazonaws.com"
-        semester:
-          type: integer
-          example: 1
-        claimsLimitDatetime:
-          type: string
-          format: date-time
     Claim:
       type: object
       properties:
