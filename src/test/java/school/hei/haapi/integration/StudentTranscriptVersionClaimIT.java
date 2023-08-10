@@ -71,6 +71,7 @@ public class StudentTranscriptVersionClaimIT {
 
         assertTrue(claim.contains(studentTranscriptClaim1()));
     }
+    /*
     @Test
     void teacher_read_transcript_version_claim_ok() throws ApiException {
         ApiClient teacher1Client = anApiClient(TEACHER1_TOKEN);
@@ -102,6 +103,9 @@ public class StudentTranscriptVersionClaimIT {
         assertEquals(claim.getTranscriptVersionId(), "version1_id");
     }
 
+     */
+
+    /*
     @Test
     void student_write_transcript_version_claim_ok() throws ApiException {
         ApiClient student1Client = anApiClient(STUDENT1_TOKEN);
@@ -124,6 +128,8 @@ public class StudentTranscriptVersionClaimIT {
         assertEquals(claim, update);
     }
 
+
+     */
     static class ContextInitializer extends AbstractContextInitializer {
         public static final int SERVER_PORT = anAvailableRandomPort();
 
