@@ -9,34 +9,42 @@ import org.springframework.web.bind.annotation.RestController;
 import school.hei.haapi.endpoint.rest.mapper.ClaimMapper;
 import school.hei.haapi.endpoint.rest.model.StudentTranscriptClaim;
 import school.hei.haapi.model.TranscriptVersionClaim;
+import school.hei.haapi.model.exception.NotFoundException;
+import school.hei.haapi.model.validator.ClaimValidator;
+import school.hei.haapi.repository.TranscriptVersionClaimRepository;
 import school.hei.haapi.service.TranscriptVersionClaimService;
 
 @RestController
 @AllArgsConstructor
 public class TranscriptVersionClaimController {
 
-    private final TranscriptVersionClaimService service;
-    private final ClaimMapper mapper;
+  private final TranscriptVersionClaimService service;
+  private final ClaimValidator claimValidator;
+  private final ClaimMapper mapper;
 
-    @GetMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/claims/{claim_id}")
-    public StudentTranscriptClaim getClaimById(
-            @PathVariable("student_id") String student_id,
-            @PathVariable("transcript_id") String transcript_id,
-            @PathVariable("version_id") String version_id,
-            @PathVariable("claim_id") String claim_id) {
-        return mapper.toRest(service.getClaimTranscriptVersion(claim_id), transcript_id, version_id, student_id);
-    }
+  @GetMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/claims/{claim_id}")
+  public StudentTranscriptClaim getClaimById(
+    @PathVariable("student_id") String studentId,
+    @PathVariable("transcript_id") String transcriptId,
+    @PathVariable("version_id") String versionId,
+    @PathVariable("claim_id") String claimId) {
+    TranscriptVersionClaim claim = service.getClaimTranscriptVersion(claimId, studentId, transcriptId, versionId);
+    return mapper.toRest(claim, transcriptId, versionId, studentId);
+  }
 
-    @PutMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/claims/{claim_id}")
-    public TranscriptVersionClaim crupDateClaimById(
-            @PathVariable("student_id") String student_id,
-            @PathVariable("transcript_id") String transcript_id,
-            @PathVariable("version_id") String version_id,
-            @PathVariable("claim_id") String claim_id,
-            @RequestBody StudentTranscriptClaim toWrite) {
+  @PutMapping("/students/{student_id}/transcripts/{transcript_id}/versions/{version_id}/claims/{claim_id}")
+  public StudentTranscriptClaim updateClaimById(
+    @PathVariable("student_id") String studentId,
+    @PathVariable("transcript_id") String transcriptId,
+    @PathVariable("version_id") String versionId,
+    @PathVariable("claim_id") String claimId,
+    @RequestBody TranscriptVersionClaim toWrite) {
 
-        return mapper.toDomain(toWrite, transcript_id, version_id, student_id);
+    claimValidator.validateIdsMatch(toWrite, studentId, transcriptId, versionId, claimId);
 
-    }
+    TranscriptVersionClaim updatedClaim = mapper.toDomain(toWrite, transcriptId, versionId, studentId, claimId);
+    TranscriptVersionClaim savedClaim = service.updateClaimTranscriptVersion(updatedClaim);
+
+    return mapper.toRest(savedClaim, transcriptId, versionId, studentId);
+  }
 }
-
